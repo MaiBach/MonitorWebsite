@@ -1,0 +1,431 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>WEB SMS Center</title>
+<link href="./cauhinhmonitor_files/englobal.css" rel="stylesheet" type="text/css">
+<link href="./cauhinhmonitor_files/encss.css" rel="stylesheet" type="text/css">
+<style>input[readonly]{background-color:#dcdcdc;}input[disabled]{background-color:#dcdcdc;}</style>
+<script type="text/javascript" src="./cauhinhmonitor_files/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="./cauhinhmonitor_files/enframe.js"></script>
+<script type="text/javascript">
+/****************************************
+ * IP输入框（只允许 【0-9】,【.】）
+ ****************************************/
+function inputlimit_IP(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)||key == 46)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * IP输入框（只允许 【0-9】,【.】,【*】）
+ ****************************************/
+function inputlimit_IP1(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)||key == 46 ||key == 42)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * IP输入框（只允许 【0-9】,【.】,【,】）
+ ****************************************/
+function inputlimit_IP2(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)|| key == 46 || key == 44)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ * IP输入框（只允许 【0-9】,【.】,【,】,【*】）
+ ****************************************/
+function inputlimit_IP3(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)|| key == 46 || key == 44 || key == 42)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ * IP输入框（只允许 【0-9】,【.】,【@】）
+ ****************************************/
+function inputlimit_IP4(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)|| key == 46 || key == 64)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ * IP输入框（只允许 【0-9】,【a-z】,【A-Z】,【.】）IP+域名
+ ****************************************/
+function inputlimit_IP5(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)|| key == 46 || (key >= 65 && key <= 90) || (key >= 97 && key <= 122))
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * 数字输入框（只允许 【0-9】）
+ ****************************************/
+function inputlimit_number(value,e){
+	var key = e.keyCode||e.which;
+	if((key > 47 && key < 58))
+	{
+	}
+	else if(key !=8)
+	{
+	   if (window.event) //IE
+	   	  event.returnValue=false;
+	   else //Firefox
+	      e.preventDefault();
+    }
+}
+/****************************************
+ * 数字输入框1（只允许 【0-9】,【,】）
+ ****************************************/
+function inputlimit_number1(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)||key == 44)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * 数字输入框2（只允许 【0-9】,【*】,【#】）
+ ****************************************/
+function inputlimit_number2(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58) ||key == 35 ||key == 42)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ * 电话号码输入框,（只允许 【0-9】,【-】）
+ ****************************************/
+function inputlimit_phonenumber(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)||key == 45)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ * 电话号码输入框1,（只允许 【0-9】,【,】,【+】）
+ ****************************************/
+function inputlimit_phonenumber1(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58) || key == 44 || key == 43)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ *IMEI输入框,（只允许 【0-9】,【,】,【bs】）
+ ****************************************/
+function inputlimit_Blacklist(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58) || key == 44)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * 电话号码输入框1,（只允许 【0-9】,【,】,【Enter】）
+ ****************************************/
+function inputlimit_IMEI(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58) || key == 44 || key == 13)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/**********************************************************************************************************
+ * 服务器地址，用户名，密码（禁止 【sp】,【!】,【"】,【&】,【`】,【(】,【)】,【;】,【=】,【\】,【|】,【~】）
+ **********************************************************************************************************/
+function inputlimit_spw(value,e){
+	var key = e.keyCode||e.which;
+	if(key==32 || key==33 || key==34 || key==38 || key==39 || key==40
+	|| key==41 || key==59 || key==61 || key==92 || key==124 || key==126)
+	{
+      if (window.event) //IE
+         event.returnValue=false;
+      else //Firefox
+         e.preventDefault();
+    }
+}
+/****************************************
+ * 时间输入框（只允许 【0-9】,【-】,【:】）
+ ****************************************/
+function inputlimit_time(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 59)||key == 45 || key == 32)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * dtmf输入框（只允许 【0-9】,【#】,【*】）
+ ****************************************/
+function inputlimit_dtmf(value,e){
+	var key = e.keyCode||e.which;
+	if((key > 47 && key < 58)||key == 35||key == 42)
+	{
+	}
+	else if(key !=8)
+	{
+	   if (window.event) //IE
+	   	  event.returnValue=false;
+	   else //Firefox
+	      e.preventDefault();
+    }
+}
+/**************************************************************
+ *字符串1 输入框（只允许 【0-9】,【a-z】,【A-Z】,【空格】,【.】,【_】）
+ **************************************************************/
+function inputlimit_str1(value,e){
+	var key = e.keyCode||e.which;
+   	if((key == 32) //空格
+   			|| (key == 46) //点
+   			|| (key == 95) //下划横杠
+   			|| (key == 8) //Backspace
+   			|| (key == 127) //Delete
+   			|| (key >= 48 && key <= 57) //数字
+   			|| (key >=65 && key <= 90) //大写字母
+   			|| (key >= 97 && key <=  122) //小写字母
+   			)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ *去掉特殊符号
+ ****************************************/
+ String.prototype.TextFilter=function()
+ {
+ 	var pattern=new RegExp("[`~%!@#^=''?~！@#$￥……&——‘”“'？*()（）<>《》【】{}:;：；，,。.、]");//特殊符号
+ 	var rs="";
+ 	for(var i=0;i<this.length;i++)
+ 	{
+ 		rs+=this.substr(i,1).replace(pattern,'');
+ 	}
+ 	return rs;
+ }
+ /****************************************
+  *检查输入是否有特殊符号
+  ****************************************/
+ function Input_Check(value)
+ {
+ 	var txt=value.TextFilter(); 
+ 	if(txt!=value)
+ 	{
+ 		return 1;
+ 	}
+ 	else
+ 	 	return 0;
+ }
+
+ function inputlimit_fwdnum(value,e)
+ {
+ 	var key = window.event?e.keyCode:e.which;
+ 	if((key > 47 && key < 58)||key == 35||key == 42||key == 43||key == 97||key == 98||key == 99){
+ 	}else if(key !=8){
+ 		if (window.event) //IE
+ 		{
+ 			e.returnValue = false; //event.returnValue=false 效果相同.
+ 		}
+ 		else //Firefox
+ 		{
+ 			e.preventDefault();
+ 		}
+ 	}
+ }
+</script>
+<script type="text/javascript">
+function ClosePop(id)
+{
+	document.getElementById(id).style.display="none";
+	$('#fade').remove();
+}
+</script>
+</head>
+<body class="index">
+<!--header begin--->
+<div class="header" style="width: 1366px;">
+	<div class="top clearfix">
+    	<a class="logout fr mr5" href="http://27.72.105.89:8086/vi/index.php" onclick="if(confirm(&#39;Bạn có chắc muốn thoát phiên làm việc này?&#39;)) return true; else return false;"></a><span class="fr mr10">Tài khoản：<font color="#7800ff">admin</font></span>
+    	    </div>
+</div>
+<!--header end && container begin--->
+<div class="container" style="height: 566px; width: 1366px;">
+    <div class="content">
+    	<dl class="left">
+    	            <dt class="clearfix current"><i class="ico cs"></i>Giám sát</dt>
+            <dd style="display:block">
+                <ul class="clearfix">
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/monitor.php" target="iframe">Trạng thái dịch vụ</a></li>
+					<li class="blacklink"><a href="http://27.72.105.89:8086/vi/7-14smsoutbox.php" target="iframe">Tin đã gửi lỗi</a></li>
+				    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/report-by-gateway.php" target="iframe">Theo Gateway</a></li>
+                    <li class="first blacklink current"><a href="http://27.72.105.89:8086/vi/monitor-port.php" target="iframe">Cấu hình monitor port</a></li>
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/monitor-renew.php" target="iframe">Tình hình gia hạn SMS</a></li>
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/content_filter.php" target="iframe">Lọc nội dung</a></li>
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/system_config.php" target="iframe">Cấu hình chung</a></li>
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/map_imei_phonenumber.php" target="iframe">Map IMEI - SĐT</a></li>
+                    <li class="blacklink"><a href="http://27.72.105.89:8086/vi/send-sms-by-file.php" target="iframe">Gửi SMS từ file</a></li>
+					<li class="blacklink"><a href="http://27.72.105.89:8086/vi/7-14smsoutbox_error_retry.php" target="iframe">Retry SMS CSKH lỗi</a></li>
+					<li class="blacklink"><a href="http://27.72.105.89:8086/vi/7-1smsqueue.php" target="iframe">Kiểm tra QUEUE SMS</a></li>
+					<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/7-1smsqueue_change_device.php" target="iframe">Chuyển DevID Telcos</a></li>
+					<li class="blacklink"><a href="http://27.72.105.89:8086/vi/7-1smsqueue_mscontent_update.php" target="iframe">Thay ND trên QUEUE SMS</a></li>
+                    <li class="blacklink"><a href="http://27.72.105.89:8086/vi/report_smsqueue_tonghop.php" target="iframe">Tra cứu Queue tổng hợp</a></li>
+
+
+                </ul>
+            </dd>
+            <dt class="clearfix"><i class="ico um"></i>Người dùng</dt>
+            <dd style="display:none">
+                <ul class="clearfix">
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/2-1usermanage.php" target="iframe">User Manage</a></li>
+					 <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/13-1application.php" target="iframe">Danh sách ứng dụng</a></li>
+                   	<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/13-1application_new.php" target="iframe">Tạo mới ứng dụng</a></li>
+                </ul>
+            </dd>
+				
+            <dt class="clearfix"><i class="ico cs"></i>Telco</dt>
+            <dd style="display:none;">
+                <ul class="clearfix">
+					<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/1-1devmanage.php" target="iframe">Quản lý thiết bị</a></li>
+                    <li class="blacklink"><a href="http://27.72.105.89:8086/vi/telconumber.php" target="iframe">Danh sách đầu số</a></li>
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/telcogateway.php" target="iframe">Cấu hình Gateway</a></li>
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/monitor-port.php" target="iframe">Cấu hình Monitor Port</a></li>
+                </ul>
+            </dd>
+
+             <dt class="clearfix"><i class="ico ss"></i>Hệ thống</dt>
+            <dd style="display:none">
+                <ul class="clearfix">
+				    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/1-1devmanage.php" target="iframe">Quản lý thiết bị</a></li>
+					<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/system_config_reset.php" target="iframe">Reset Redis Config</a></li>
+					<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/7-1smsqueue_change_device.php" target="iframe">Chuyển DevID Telcos</a></li>
+					<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/7-1smsqueue_change_device_OTP.php" target="iframe">Chuyển DevID &amp; OTP</a></li>
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/3-1pwd.php" target="iframe">Đổi mật khẩu</a></li>
+                   	<li class="blacklink"><a href="http://27.72.105.89:8086/vi/4-1operatelog.php" target="iframe">Log hệ thống</a></li>
+                </ul>
+            </dd>
+            <dt class="clearfix"><i class="ico cp"></i>Báo cáo</dt>
+            <dd style="">
+                <ul class="clearfix">
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/6-1smsinbox.php" target="iframe">Tin nhắn đến</a></li>
+                    <li class="blacklink"><a href="http://27.72.105.89:8086/vi/7-1smsoutbox.php" target="iframe">Tin đã gửi</a></li>
+					<li class="blacklink"><a href="http://27.72.105.89:8086/vi/7-14smsoutbox.php" target="iframe">Tin đã gửi Lỗi</a></li>
+					<li class="blacklink"><a href="http://27.72.105.89:8086/vi/sms-tracking.php" target="iframe">SMS Tracking</a></li>
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/report-sms.php" target="iframe">Sản lượng SMS</a></li>
+					<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/report-sms-by-telcos.php" target="iframe">Sản lượng Telcos</a></li>
+					<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/report-sms-by-telcos-total.php" target="iframe">Sản lượng T/H ngày</a></li>
+					<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/report-sms-by-Dev-total.php" target="iframe">S.Lượng theo Device</a></li>
+					<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/report-sms-by-telcos-totalall.php" target="iframe">Sản lượng tổng hợp</a></li>
+                    <li class="first blacklink"><a href="http://27.72.105.89:8086/vi/report-by-gateway.php" target="iframe">Theo Gateway</a></li>
+					<li class="first blacklink"><a href="http://27.72.105.89:8086/vi/7-16-smsoutbox-byHour.php" target="iframe">Sản lượng theo giờ</a></li>
+                </ul>
+            </dd>
+        		
+        </dl>
+    	<div class="right" style="width: 1186px;"><iframe scrolling="auto" class="iframe" name="iframe" src="./cauhinhmonitor_files/1-1devmanage.html" frameborder="0" id="myframe" style="width: 1186px;"></iframe></div>
+    </div>
+</div>
+
+
+</body></html>

@@ -1,0 +1,122 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>WEB SMS Center</title>
+<link href="./Login_files/englobal.css" rel="stylesheet" type="text/css">
+<link href="./Login_files/encss.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="./Login_files/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="./Login_files/enframe.js"></script>
+<script type="text/javascript">
+function check(form)
+{
+	if (form.name.value=="")
+	{
+		alert("Vui lòng nhập Username!");
+		form.name.focus();
+		return false;
+	}
+	if (form.pwd.value=="")
+	{
+		alert("Vui lòng nhập mật khẩu!");
+		form.pwd.focus();
+		return false;
+	}
+}
+function SelectUserType(form)
+{
+	if(form.userType.value == 1)
+	{
+		document.getElementById("idDevList").style.display = "";
+	}
+	else
+	{
+		document.getElementById("idDevList").style.display = "none";
+	}
+}
+</script>
+</head>
+<body class="log" onload="SelectUserType(formLogin)">
+<div class="loghead">
+	<div class="logtop clearfix">
+		<div class="logtop1">   
+		</div>
+	</div>
+</div>
+<div class="logcon" style="height: 566px;">
+    <div class="tac content">
+    	<form name="formLogin" method="post" action="http://27.72.105.89:8086/vi/index.php">
+        	<table cellpadding="0" cellspacing="0" width="28%" align="center" class="tblcontext" style="border:0px solid #444444;width:500px:height:800px">
+				<tbody><tr>
+					<td width="5%">&nbsp;</td>
+					<td width="90%">
+						<table width="100%" align="center" cellspacing="0" cellpadding="0" class="context">
+						<tbody><tr>
+							<td width="2%">&nbsp;</td>
+							<td width="45%">&nbsp;</td>
+							<td width="53%">&nbsp;</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td height="35px" align="right"><a href="http://27.72.105.89:8086/vi/index.php?Language=1">Tiếng việt</a> | <a href="http://27.72.105.89:8086/vi/index.php?Language=2">English</a></td>
+						</tr>
+						<tr id="idUserType">
+							<td>&nbsp;</td>
+							<td height="35px">Vai trò:</td>
+							<td>
+							<select name="userType" id="userType" style="width:132px;height:23px" onchange="SelectUserType(formLogin)">
+								<option value="0" selected="selected">Administrator</option>
+								<option value="1">User</option>
+							</select>
+							</td>
+						</tr>
+						<tr id="idDevList" style="display:none">
+							<td>&nbsp;</td>
+							<td height="35px">Máy chủ:</td>
+							<td>
+							<select name="devList" id="devList" style="width:132px;height:23px">
+																	<option value="1">SMG4032 Dev1</option>
+																	<option value="2">SMG4016 DP</option>
+																	<option value="3">SMG32-202 DEV3</option>
+																	<option value="5">GW 200 DEV 5 </option>
+																	<option value="6">GW  DEV-6</option>
+																	<option value="7">GW  206 DP DEV 7</option>
+																	<option value="8">VINA BHS</option>
+																	<option value="9">Mobi NamDinh Dev9</option>
+																	<option value="10">GW32 Du phong</option>
+																	<option value="11">GW16 BHS</option>
+															</select>
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td height="35px">Tài khoản:</td>
+							<td>
+								<input type="text" style="ime-mode:disabled;width:130px" id="name" name="name" class="text">
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td height="35px">Mật khẩu:</td>
+							<td>
+								<input type="password" style="ime-mode:disabled;width:130px" id="pwd" name="pwd" class="text">
+							</td>
+						</tr>
+						<tr align="center">
+				        	<td colspan="3" nowrap="">
+				        	<div class="mt30">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					        	<input class="btn blue-btn28" name="Submit" type="submit" value="Đăng nhập" onclick="return check(formLogin);">
+					        	<input class="btn gray-btn28 ml30" name="" type="reset" value="Làm lại">
+				        	</div>
+				        </td>
+				        </tr>
+						</tbody></table>
+					</td>
+					<td width="5%">&nbsp;</td>
+				</tr>
+			</tbody></table>
+        </form>
+    </div>
+</div>
+
+</body></html>

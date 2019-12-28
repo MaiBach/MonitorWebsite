@@ -1,0 +1,963 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="pragma" content="no-cache">
+<title>HS - Port Config</title>
+<link href="./englobal.css" rel="stylesheet" type="text/css">
+<link href="./encss.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="./jquery-1.8.2.js"></script>
+<style>
+	.txtNote{
+		width:100% !important;
+		color:#5f5959 !important;
+	}
+	.txtInput{
+		color: #1d46e4 !important;
+		width:100%;
+		text-align:center;
+	}
+	.numberRenewInput{
+		width:100% !important;
+	}
+	.renewInput{
+		width:220px !important;
+	}
+	.btnRenew{
+		background: #01cefa !important;
+	    width: 62px;
+	    border-radius: 3px;
+	    margin-bottom: 1px;
+	}
+	.btnReset{
+	    display: inline-block;
+	    border: none;
+	    vertical-align: middle;
+	    cursor: pointer;
+	    text-align: center;
+	    text-shadow: 1px 1px 1px #fff;
+    overflow: hidden;
+	}
+
+</style>
+
+<script>
+	function onSelectDev(){
+		var j = document.getElementById("devId").value;
+		window.location.href='monitor-port.php?dev='+j;
+	}
+	function resetState(id, portId){
+		var rsCfm = confirm("Xác nhận reset số lần gia hạn trên port "+portId+"?");
+		if(rsCfm){
+			window.location.href='monitor-port.php?reset_renew='+id+'&dev=7';
+		}
+	}
+	function renewPort(id, portId, renewContent, renewNumber){
+		var rsCfm = confirm("Xác nhận gửi tin nhắn Renew trên port "+portId+"?");
+		if(rsCfm){
+			window.location.href='monitor-port.php?renew='+id+'&portId='+portId+'&dev=7';
+		}
+	}
+</script>
+</head>
+<body>
+<form name="myform" method="post" action="http://27.72.105.89:8086/vi/monitor-port.php?dev=7">
+<table width="100%" align="center">
+<tbody><tr>
+<td>
+<div class="main">
+	<div class="clearfix">
+		<div class="relative mt20">
+		<div class="status">
+Cấu hình thông số monitor trên 
+<select name="devId" id="devId" onchange="onSelectDev()">
+                                                    <option value="1">SMG4032 Dev1 (10.148.10.246) -&gt;PAUSED </option>
+                                                        <option value="2">SMG4016 DP (10.148.10.216) -&gt;PAUSED </option>
+                                                        <option value="3">SMG32-202 DEV3 (10.148.10.202) -&gt;PAUSED </option>
+                                                        <option value="5">GW 200 DEV 5  (10.148.10.200) -&gt;PAUSED </option>
+                                                        <option value="6">GW  DEV-6 (10.148.10.221) -&gt;PAUSED </option>
+                                                        <option value="7" selected="">GW  206 DP DEV 7 (10.148.10.206) -&gt;PAUSED </option>
+                                                        <option value="8">VINA BHS (172.16.1.225) -&gt;PAUSED </option>
+                                                        <option value="9">Mobi NamDinh Dev9 (27.72.110.203) -&gt;PAUSED </option>
+                                                        <option value="10">GW32 Du phong (27.72.110.202) -&gt;PAUSED </option>
+                                                        <option value="11">GW16 BHS (172.16.10.225) -&gt;PAUSED </option>
+                            </select>
+
+		
+	</div>
+			<div class="box box2 box4" style="overflow-x:auto;">
+				<div class="table">
+				<table class="wid1">
+				<thead>
+					<tr>
+						<th class="t1">Port</th>
+						<th>Từ giờ (H:i:s)</th>
+						<th>Đến giờ (H:i:s)</th>
+						<th>SMS/gói</th>
+						<th>Gói ngày</th>
+						<th>Giá/gói</th>
+						<th>Gói gia hạn</th>
+						<th>Gói/ngày</th>
+						<th>Nội dung gia hạn gói sms</th>
+						<th>TĐ gia hạn</th>
+                        <th>Đã gửi</th>
+						<th>CP TKC</th>
+						<th>TK Chính</th>
+						<th>CP TKKM</th>
+						<th>TK KM</th>
+						<th>Seri/Phone</th>
+						<th>Tác vụ</th>
+					</tr>
+				</thead>
+				<tbody>
+									<tr>
+						<td class="t1">1</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[176][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[176][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[176][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[176][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[176][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[176][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[176][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[176][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[176][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[176][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[176][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;176&#39;,&#39;0&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(176,0)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[176][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">2</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[177][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[177][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[177][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[177][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[177][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[177][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[177][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[177][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[177][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[177][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[177][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;177&#39;,&#39;1&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(177,1)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[177][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">3</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[178][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[178][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[178][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[178][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[178][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[178][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[178][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[178][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[178][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[178][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[178][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;178&#39;,&#39;2&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(178,2)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[178][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">4</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[179][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[179][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[179][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[179][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[179][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[179][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[179][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[179][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[179][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[179][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[179][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;179&#39;,&#39;3&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(179,3)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[179][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">5</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[180][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[180][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[180][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[180][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[180][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[180][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[180][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[180][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[180][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[180][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[180][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;180&#39;,&#39;4&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(180,4)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[180][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">6</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[181][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[181][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[181][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[181][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[181][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[181][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[181][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[181][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[181][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[181][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[181][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;181&#39;,&#39;5&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(181,5)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[181][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">7</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[182][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[182][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[182][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[182][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[182][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[182][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[182][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[182][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[182][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[182][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[182][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;182&#39;,&#39;6&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(182,6)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[182][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">8</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[183][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[183][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[183][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[183][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[183][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[183][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[183][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[183][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[183][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[183][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[183][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;183&#39;,&#39;7&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(183,7)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[183][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">9</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[184][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[184][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[184][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[184][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[184][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[184][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[184][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[184][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[184][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[184][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[184][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;184&#39;,&#39;8&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(184,8)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[184][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">10</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[185][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[185][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[185][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[185][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[185][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[185][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[185][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[185][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[185][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[185][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[185][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;185&#39;,&#39;9&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(185,9)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[185][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">11</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[186][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[186][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[186][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[186][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[186][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[186][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[186][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[186][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[186][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[186][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[186][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;186&#39;,&#39;10&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(186,10)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[186][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">12</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[187][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[187][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[187][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[187][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[187][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[187][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[187][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[187][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[187][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[187][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[187][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;187&#39;,&#39;11&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(187,11)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[187][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">13</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[188][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[188][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[188][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[188][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[188][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[188][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[188][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[188][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[188][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[188][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[188][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;188&#39;,&#39;12&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(188,12)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[188][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">14</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[189][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[189][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[189][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[189][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[189][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[189][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[189][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[189][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[189][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[189][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[189][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;189&#39;,&#39;13&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(189,13)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[189][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">15</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[190][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[190][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[190][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[190][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[190][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[190][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[190][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[190][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[190][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[190][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[190][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;190&#39;,&#39;14&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(190,14)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[190][notes]" value="" /> -->
+						</td>
+					</tr>
+									<tr>
+						<td class="t1">16</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[191][timeFrom]" value="00:00:00">
+						</td>	
+						<td> 
+							<input class="text1 txtInput" type="text" name="portConfig[191][timeTo]" value="23:59:59">
+						</td>				
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[191][maxAllowed]" value="50">
+						</td>
+						<td>
+							<input class="text1 txtInput" type="checkbox" name="portConfig[191][isDailyPkg]" value="1">
+						</td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[191][packagePrice]" value="0">
+                        </td>
+						<td>
+							0						</td>
+						<td>
+							<input class="text1 txtInput" type="text" name="portConfig[191][maxRenew]" value="2">
+						</td>
+						<td>
+							<input class=" text1 txtInput" type="text" name="portConfig[191][renewContent]" value="S50">
+						</td>
+						<td>
+							<input class="numberRenewInput text1 txtInput" type="text" name="portConfig[191][renewNumber]" value="900">
+							
+						</td>
+                        <td>
+                            0                        </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[191][syntaxMainBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="numberRenewInput text1 txtInput" type="text" name="portConfig[191][syntaxDiscountBal]" value="">
+
+                        </td>
+                        <td>
+                                                    </td>
+                        <td>
+                            <input class="text1 txtInput" type="text" name="portConfig[191][simSerial]" value="">
+                        </td>
+						<td>
+							<input id="connBtn1" class="btnReset btnRenew blue-btn29 poplight" name="connect" type="button" onclick="renewPort(&#39;191&#39;,&#39;15&#39;,&#39;S50&#39;,&#39;900&#39;)" value="Renew">
+							<input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" onclick="resetState(191,15)" value="Reset">
+						<!-- 	<input class="text1 txtNote" type="text" name="portConfig[191][notes]" value="" /> -->
+						</td>
+					</tr>
+								</tbody>
+				</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	    <div class="relative mt20">
+    	<div class="box box3 clearfix">
+            <input class="btn btn1" type="submit" style="float:right" name="updatePort" value="Cập nhật">
+        </div>
+    </div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</form>
+
+
+
+</body></html>

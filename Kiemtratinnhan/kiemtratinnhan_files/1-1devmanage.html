@@ -1,0 +1,995 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>WEB SMS Center</title>
+<link href="./englobal.css" rel="stylesheet" type="text/css">
+<link href="./encss.css" rel="stylesheet" type="text/css">
+<link href="./jquery-ui-1.9.1.custom.css" rel="stylesheet" type="text/css">
+<style>input[readonly]{background-color:#dcdcdc;}input[disabled]{background-color:#dcdcdc;}</style>
+<script type="text/javascript" src="./jquery-1.8.2.js"></script>
+<script type="text/javascript" src="./jquery-ui-1.9.1.custom.js"></script>
+<script type="text/javascript">
+/****************************************
+ * IP输入框（只允许 【0-9】,【.】）
+ ****************************************/
+function inputlimit_IP(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)||key == 46)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * IP输入框（只允许 【0-9】,【.】,【*】）
+ ****************************************/
+function inputlimit_IP1(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)||key == 46 ||key == 42)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * IP输入框（只允许 【0-9】,【.】,【,】）
+ ****************************************/
+function inputlimit_IP2(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)|| key == 46 || key == 44)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ * IP输入框（只允许 【0-9】,【.】,【,】,【*】）
+ ****************************************/
+function inputlimit_IP3(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)|| key == 46 || key == 44 || key == 42)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ * IP输入框（只允许 【0-9】,【.】,【@】）
+ ****************************************/
+function inputlimit_IP4(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)|| key == 46 || key == 64)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ * IP输入框（只允许 【0-9】,【a-z】,【A-Z】,【.】）IP+域名
+ ****************************************/
+function inputlimit_IP5(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)|| key == 46 || (key >= 65 && key <= 90) || (key >= 97 && key <= 122))
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * 数字输入框（只允许 【0-9】）
+ ****************************************/
+function inputlimit_number(value,e){
+	var key = e.keyCode||e.which;
+	if((key > 47 && key < 58))
+	{
+	}
+	else if(key !=8)
+	{
+	   if (window.event) //IE
+	   	  event.returnValue=false;
+	   else //Firefox
+	      e.preventDefault();
+    }
+}
+/****************************************
+ * 数字输入框1（只允许 【0-9】,【,】）
+ ****************************************/
+function inputlimit_number1(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)||key == 44)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * 数字输入框2（只允许 【0-9】,【*】,【#】）
+ ****************************************/
+function inputlimit_number2(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58) ||key == 35 ||key == 42)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ * 电话号码输入框,（只允许 【0-9】,【-】）
+ ****************************************/
+function inputlimit_phonenumber(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58)||key == 45)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ * 电话号码输入框1,（只允许 【0-9】,【,】,【+】）
+ ****************************************/
+function inputlimit_phonenumber1(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58) || key == 44 || key == 43)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ *IMEI输入框,（只允许 【0-9】,【,】,【bs】）
+ ****************************************/
+function inputlimit_Blacklist(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58) || key == 44)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * 电话号码输入框1,（只允许 【0-9】,【,】,【Enter】）
+ ****************************************/
+function inputlimit_IMEI(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 58) || key == 44 || key == 13)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/**********************************************************************************************************
+ * 服务器地址，用户名，密码（禁止 【sp】,【!】,【"】,【&】,【`】,【(】,【)】,【;】,【=】,【\】,【|】,【~】）
+ **********************************************************************************************************/
+function inputlimit_spw(value,e){
+	var key = e.keyCode||e.which;
+	if(key==32 || key==33 || key==34 || key==38 || key==39 || key==40
+	|| key==41 || key==59 || key==61 || key==92 || key==124 || key==126)
+	{
+      if (window.event) //IE
+         event.returnValue=false;
+      else //Firefox
+         e.preventDefault();
+    }
+}
+/****************************************
+ * 时间输入框（只允许 【0-9】,【-】,【:】）
+ ****************************************/
+function inputlimit_time(value,e){
+	var key = e.keyCode||e.which;
+   	if((key > 47 && key < 59)||key == 45 || key == 32)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+/****************************************
+ * dtmf输入框（只允许 【0-9】,【#】,【*】）
+ ****************************************/
+function inputlimit_dtmf(value,e){
+	var key = e.keyCode||e.which;
+	if((key > 47 && key < 58)||key == 35||key == 42)
+	{
+	}
+	else if(key !=8)
+	{
+	   if (window.event) //IE
+	   	  event.returnValue=false;
+	   else //Firefox
+	      e.preventDefault();
+    }
+}
+/**************************************************************
+ *字符串1 输入框（只允许 【0-9】,【a-z】,【A-Z】,【空格】,【.】,【_】）
+ **************************************************************/
+function inputlimit_str1(value,e){
+	var key = e.keyCode||e.which;
+   	if((key == 32) //空格
+   			|| (key == 46) //点
+   			|| (key == 95) //下划横杠
+   			|| (key == 8) //Backspace
+   			|| (key == 127) //Delete
+   			|| (key >= 48 && key <= 57) //数字
+   			|| (key >=65 && key <= 90) //大写字母
+   			|| (key >= 97 && key <=  122) //小写字母
+   			)
+   	{
+    }
+    else if(key !=8)
+    {    
+       if (window.event) //IE
+  	      event.returnValue=false;
+  	   else //Firefox
+  	      e.preventDefault();
+    }
+}
+
+/****************************************
+ *去掉特殊符号
+ ****************************************/
+ String.prototype.TextFilter=function()
+ {
+ 	var pattern=new RegExp("[`~%!@#^=''?~！@#$￥……&——‘”“'？*()（）<>《》【】{}:;：；，,。.、]");//特殊符号
+ 	var rs="";
+ 	for(var i=0;i<this.length;i++)
+ 	{
+ 		rs+=this.substr(i,1).replace(pattern,'');
+ 	}
+ 	return rs;
+ }
+ /****************************************
+  *检查输入是否有特殊符号
+  ****************************************/
+ function Input_Check(value)
+ {
+ 	var txt=value.TextFilter(); 
+ 	if(txt!=value)
+ 	{
+ 		return 1;
+ 	}
+ 	else
+ 	 	return 0;
+ }
+
+ function inputlimit_fwdnum(value,e)
+ {
+ 	var key = window.event?e.keyCode:e.which;
+ 	if((key > 47 && key < 58)||key == 35||key == 42||key == 43||key == 97||key == 98||key == 99){
+ 	}else if(key !=8){
+ 		if (window.event) //IE
+ 		{
+ 			e.returnValue = false; //event.returnValue=false 效果相同.
+ 		}
+ 		else //Firefox
+ 		{
+ 			e.preventDefault();
+ 		}
+ 	}
+ }
+</script><script type="text/javascript">
+$(window).ready(function(){
+	$( ".selector" ).datepicker({monthNames: ['01','02','03','04','05','06','07','08','09','10','11','12'],dateFormat: 'yy-mm-dd',dayNamesMin: ['CN','T2','T3','T4','T5','T6','T7'],showMonthAfterYear:true, yearSuffix: ' -'});
+});
+function alls()
+{
+	var sum = document.getElementsByName("eng_id[]");// 得到name是eng_id[]的元素的类型
+	for(var i=0;i<sum.length;i++)
+	{ //循环输出
+		if(sum[i].type=="checkbox")
+		{ //判断是否是checkbox
+     		sum[i].checked = true ; //是的话就选中
+   		}
+	}
+}
+function unalls()
+{
+	var sum = document.getElementsByName("eng_id[]");// 得到name是eng_id[]的元素的类型
+	for(var i=0;i<sum.length;i++)
+	{ //循环输出
+   		if(sum[i].type=="checkbox")
+   	   	{ //判断是否是checkbox
+     		sum[i].checked = false ; //是的话就不选中
+   		}
+	}
+}
+
+function Reflash()
+{
+	window.location="7-1smsoutbox.php";
+	return true;
+}
+
+function Reflashsms()
+{
+	var isFirefox=navigator.userAgent.toUpperCase().indexOf("FIREFOX")!=-1?true:false;
+	if(isFirefox)
+	{
+		setTimeout("load_word(0)",10);
+	}
+	else
+	{
+		load_word(0);
+	}
+	window.parent.location=window.parent.location;
+	return true;
+}
+
+function check(form)
+{
+	if(form.startdate.value>form.enddate.value){
+		alert("The ending date cannot be earlier than the starting date!");form.startdate.focus(),form.enddate.focus();return false;
+	}
+}
+
+</script>
+</head>
+<body>
+<form id="myform" name="myform" action="http://27.72.105.89:8086/vi/7-1smsoutbox.php" method="post">
+    	<div class="main">
+    <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="tbltitle">
+    <tbody><tr><td>&nbsp;</td></tr>
+    <tr>
+	<td>Số ĐT nhận
+		<input type="text" style="ime-mode:disabled;width:100px" class="text1" id="RcvPhoneNumber" maxlength="20" name="RcvPhoneNumber" onkeypress="inputlimit_number(this.value,event)" value="">		
+	Nội dung
+		<input type="text" style="width:180px" class="text1" id="SendContent" maxlength="20" name="SendContent" value="">
+	
+			    
+		UserID: 
+		<input type="text" style="width:25px" class="text1" id="userId" maxlength="20" name="userId" value="">
+		
+			
+	Telcos: 
+		<select id="telcoId" name="telcoId" class="list" style="width:80px">
+	        <option value="0" selected="">Tất cả</option>
+		   <option value="1">VIETTEL</option>
+		   <option value="2">MOBIFONE</option>
+		   <option value="3">VINAPHONE</option>
+		   <option value="4">Vietnamobile</option>
+		   <option value="5">Gmobile</option>
+		</select>	
+		
+	
+	Device:
+				
+				<select id="devId" name="devId" class="list" style="width:100px">
+				
+				<option value="" selected="">Tất cả </option>
+					 	
+								 <option value="1">DEVID:1 - IP: 10.148.10.246</option>
+					 				 <option value="2">DEVID:2 - IP: 10.148.10.216</option>
+					 				 <option value="3">DEVID:3 - IP: 10.148.10.202</option>
+					 				 <option value="5">DEVID:5 - IP: 10.148.10.200</option>
+					 				 <option value="6">DEVID:6 - IP: 10.148.10.221</option>
+					 				 <option value="7">DEVID:7 - IP: 10.148.10.206</option>
+					 				 <option value="8">DEVID:8 - IP: 172.16.1.225</option>
+					 				 <option value="9">DEVID:9 - IP: 27.72.110.203</option>
+					 				 <option value="10">DEVID:10 - IP: 27.72.110.202</option>
+					 				 <option value="11">DEVID:11 - IP: 172.16.10.225</option>
+					 				
+				</select>
+				
+		<select id="idport" name="idport" class="list" style="width:60px">
+				   <option value="0" selected="">All Ports</option>
+		</select>
+	Ngày bắt đầu
+		<input type="text" style="ime-mode:disabled;width:132px;height:20px" name="startdate" id="startdate" onkeypress="inputlimit_phonenumber(this.value,event)" value="" class="text selector hasDatepicker">
+	Ngày kết thúc
+	    <input type="text" style="ime-mode:disabled;width:132px;height:20px" name="enddate" id="enddate" onkeypress="inputlimit_phonenumber(this.value,event)" value="" class="text selector hasDatepicker">
+	Trạng thái	
+	    <select id="smsstate" name="smsstate" class="list" style="width:60px">
+	       <option value="0">Tất cả</option>
+		   <option value="1">Chờ gửi</option>
+		   <option value="2">Đang gửi</option>
+		   <option value="3" selected="">Đã gửi</option>
+		   <option value="4">Có lỗi</option>
+		   <option value="5">Bị khoá</option>
+		   <option value="6">Timeout</option>
+		</select>	
+		<input class="btn btn1" value="Search" type="submit" name="search" style="float:right" onclick="return check(myform);">		
+	</td>
+	</tr>
+	</tbody></table>	
+		<div class="clearfix">
+			<div class="relative mt20">
+			<div class="status">Tra soát SMS</div>
+				<div class="box box2 box4" style="overflow-x:auto;">
+					<div class="table">
+						<table class="wid1">
+                <thead>
+                    <tr>
+                        <th class="t1" width="5%">#</th>
+                        <th width="5%">Log ID</th>
+                        <th width="5%">Session ID</th>
+                       <th width="5%">User ID</th>
+                        <th width="5%">App</th>
+                        <th width="5%">GW ID</th>
+                        <th width="5%">DEV ID</th>
+						 <th width="5%">Telcos</th>
+					   <th width="5%">Port</th>
+                       <th width="10%">Số điện thoại</th>
+                        <th width="10%">Request</th>
+                        <th width="10%">Response</th>
+						<th width="10%">Seconds</th>
+                        <th>Nội dung</th>
+                        <th width="10%">Trạng thái</th>
+						<th width="5%">OTP</th>
+                        <th>Ghi chú</th>
+                        <th width="10%">Gửi qua</th>
+                    </tr>
+                </thead>
+	                            <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977708"></td>
+                        <td>5977708</td>
+                    	<td>5e031250d1b48</td>
+                        <td id="port5977708">4</td>
+                        <td id="port5977708">5</td>
+                        <td id="port5977708">6</td>
+                        <td id="port5977708">9</td>
+												
+						<td id="port5977708">MOBIFONE</td>
+						
+                        <td id="port5977708">17</td>
+                        <td id="phonenumber5977708">0938439557</td>                       
+                        <td id="time5977708">25/12/2019 14:40:17</td>
+                        <td id="time5977708">25/12/2019 14:45:44</td>
+						<td id="time5977708">327</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977708">150110</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977708">1-OTP</td>
+					    <td></td>
+                        <td id="type5977708">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977621"></td>
+                        <td>5977621</td>
+                    	<td>5e02eb9d01ffc</td>
+                        <td id="port5977621">4</td>
+                        <td id="port5977621">5</td>
+                        <td id="port5977621">6</td>
+                        <td id="port5977621">9</td>
+												
+						<td id="port5977621">MOBIFONE</td>
+						
+                        <td id="port5977621">31</td>
+                        <td id="phonenumber5977621">0792474583</td>                       
+                        <td id="time5977621">25/12/2019 12:15:39</td>
+                        <td id="time5977621">25/12/2019 12:21:57</td>
+						<td id="time5977621">378</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977621">2917</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977621">1-OTP</td>
+					    <td></td>
+                        <td id="type5977621">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977611"></td>
+                        <td>5977611</td>
+                    	<td>5e02eba521991</td>
+                        <td id="port5977611">4</td>
+                        <td id="port5977611">5</td>
+                        <td id="port5977611">6</td>
+                        <td id="port5977611">9</td>
+												
+						<td id="port5977611">MOBIFONE</td>
+						
+                        <td id="port5977611">19</td>
+                        <td id="phonenumber5977611">0908320981</td>                       
+                        <td id="time5977611">25/12/2019 12:16:20</td>
+                        <td id="time5977611">25/12/2019 12:21:36</td>
+						<td id="time5977611">316</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977611">777365</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977611">1-OTP</td>
+					    <td></td>
+                        <td id="type5977611">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977610"></td>
+                        <td>5977610</td>
+                    	<td>5e02ebaf5e3aa</td>
+                        <td id="port5977610">4</td>
+                        <td id="port5977610">5</td>
+                        <td id="port5977610">6</td>
+                        <td id="port5977610">9</td>
+												
+						<td id="port5977610">MOBIFONE</td>
+						
+                        <td id="port5977610">17</td>
+                        <td id="phonenumber5977610">0937683577</td>                       
+                        <td id="time5977610">25/12/2019 12:16:20</td>
+                        <td id="time5977610">25/12/2019 12:21:30</td>
+						<td id="time5977610">310</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977610">687170</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977610">1-OTP</td>
+					    <td></td>
+                        <td id="type5977610">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977604"></td>
+                        <td>5977604</td>
+                    	<td>5e02ebaf05a50</td>
+                        <td id="port5977604">4</td>
+                        <td id="port5977604">5</td>
+                        <td id="port5977604">6</td>
+                        <td id="port5977604">9</td>
+												
+						<td id="port5977604">MOBIFONE</td>
+						
+                        <td id="port5977604">24</td>
+                        <td id="phonenumber5977604">0934440980</td>                       
+                        <td id="time5977604">25/12/2019 12:16:20</td>
+                        <td id="time5977604">25/12/2019 12:21:29</td>
+						<td id="time5977604">309</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977604">341798</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977604">1-OTP</td>
+					    <td></td>
+                        <td id="type5977604">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977510"></td>
+                        <td>5977510</td>
+                    	<td>5e02eb6e9c6b2</td>
+                        <td id="port5977510">4</td>
+                        <td id="port5977510">5</td>
+                        <td id="port5977510">6</td>
+                        <td id="port5977510">9</td>
+												
+						<td id="port5977510">MOBIFONE</td>
+						
+                        <td id="port5977510">24</td>
+                        <td id="phonenumber5977510">0899490058</td>                       
+                        <td id="time5977510">25/12/2019 12:14:16</td>
+                        <td id="time5977510">25/12/2019 12:19:24</td>
+						<td id="time5977510">308</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977510">7863</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977510">1-OTP</td>
+					    <td></td>
+                        <td id="type5977510">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977488"></td>
+                        <td>5977488</td>
+                    	<td>5e02eb688b51b</td>
+                        <td id="port5977488">4</td>
+                        <td id="port5977488">5</td>
+                        <td id="port5977488">6</td>
+                        <td id="port5977488">9</td>
+												
+						<td id="port5977488">MOBIFONE</td>
+						
+                        <td id="port5977488">17</td>
+                        <td id="phonenumber5977488">0903274701</td>                       
+                        <td id="time5977488">25/12/2019 12:13:44</td>
+                        <td id="time5977488">25/12/2019 12:18:57</td>
+						<td id="time5977488">313</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977488">6168</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977488">1-OTP</td>
+					    <td></td>
+                        <td id="type5977488">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977487"></td>
+                        <td>5977487</td>
+                    	<td>5e02eb67498dd</td>
+                        <td id="port5977487">4</td>
+                        <td id="port5977487">5</td>
+                        <td id="port5977487">6</td>
+                        <td id="port5977487">9</td>
+												
+						<td id="port5977487">MOBIFONE</td>
+						
+                        <td id="port5977487">31</td>
+                        <td id="phonenumber5977487">0931003490</td>                       
+                        <td id="time5977487">25/12/2019 12:13:44</td>
+                        <td id="time5977487">25/12/2019 12:18:56</td>
+						<td id="time5977487">312</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977487">7772</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977487">1-OTP</td>
+					    <td></td>
+                        <td id="type5977487">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977486"></td>
+                        <td>5977486</td>
+                    	<td>5e02eb6534ae8</td>
+                        <td id="port5977486">4</td>
+                        <td id="port5977486">5</td>
+                        <td id="port5977486">6</td>
+                        <td id="port5977486">9</td>
+												
+						<td id="port5977486">MOBIFONE</td>
+						
+                        <td id="port5977486">19</td>
+                        <td id="phonenumber5977486">0937683577</td>                       
+                        <td id="time5977486">25/12/2019 12:13:44</td>
+                        <td id="time5977486">25/12/2019 12:18:55</td>
+						<td id="time5977486">311</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977486">253482</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977486">1-OTP</td>
+					    <td></td>
+                        <td id="type5977486">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977454"></td>
+                        <td>5977454</td>
+                    	<td>5e02eb5b93caa</td>
+                        <td id="port5977454">4</td>
+                        <td id="port5977454">5</td>
+                        <td id="port5977454">6</td>
+                        <td id="port5977454">9</td>
+												
+						<td id="port5977454">MOBIFONE</td>
+						
+                        <td id="port5977454">10</td>
+                        <td id="phonenumber5977454">0905572466</td>                       
+                        <td id="time5977454">25/12/2019 12:13:02</td>
+                        <td id="time5977454">25/12/2019 12:18:14</td>
+						<td id="time5977454">312</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977454">264134</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977454">1-OTP</td>
+					    <td></td>
+                        <td id="type5977454">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977452"></td>
+                        <td>5977452</td>
+                    	<td>5e02eb5b9d8ce</td>
+                        <td id="port5977452">4</td>
+                        <td id="port5977452">5</td>
+                        <td id="port5977452">6</td>
+                        <td id="port5977452">9</td>
+												
+						<td id="port5977452">MOBIFONE</td>
+						
+                        <td id="port5977452">1</td>
+                        <td id="phonenumber5977452">0905509086</td>                       
+                        <td id="time5977452">25/12/2019 12:13:02</td>
+                        <td id="time5977452">25/12/2019 12:18:13</td>
+						<td id="time5977452">311</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977452">287119</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977452">1-OTP</td>
+					    <td></td>
+                        <td id="type5977452">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977419"></td>
+                        <td>5977419</td>
+                    	<td>5e02eb3ed3690</td>
+                        <td id="port5977419">4</td>
+                        <td id="port5977419">5</td>
+                        <td id="port5977419">6</td>
+                        <td id="port5977419">9</td>
+												
+						<td id="port5977419">MOBIFONE</td>
+						
+                        <td id="port5977419">4</td>
+                        <td id="phonenumber5977419">0937814069</td>                       
+                        <td id="time5977419">25/12/2019 12:11:04</td>
+                        <td id="time5977419">25/12/2019 12:16:54</td>
+						<td id="time5977419">350</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977419">664259</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977419">1-OTP</td>
+					    <td></td>
+                        <td id="type5977419">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977414"></td>
+                        <td>5977414</td>
+                    	<td>5e02eb3b94f54</td>
+                        <td id="port5977414">4</td>
+                        <td id="port5977414">5</td>
+                        <td id="port5977414">6</td>
+                        <td id="port5977414">9</td>
+												
+						<td id="port5977414">MOBIFONE</td>
+						
+                        <td id="port5977414">4</td>
+                        <td id="phonenumber5977414">0909907054</td>                       
+                        <td id="time5977414">25/12/2019 12:11:04</td>
+                        <td id="time5977414">25/12/2019 12:16:37</td>
+						<td id="time5977414">333</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977414">408199</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977414">1-OTP</td>
+					    <td></td>
+                        <td id="type5977414">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977411"></td>
+                        <td>5977411</td>
+                    	<td>5e02eb39a20ae</td>
+                        <td id="port5977411">4</td>
+                        <td id="port5977411">5</td>
+                        <td id="port5977411">6</td>
+                        <td id="port5977411">9</td>
+												
+						<td id="port5977411">MOBIFONE</td>
+						
+                        <td id="port5977411">4</td>
+                        <td id="phonenumber5977411">0768458268</td>                       
+                        <td id="time5977411">25/12/2019 12:11:04</td>
+                        <td id="time5977411">25/12/2019 12:16:26</td>
+						<td id="time5977411">322</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977411">172569</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977411">1-OTP</td>
+					    <td></td>
+                        <td id="type5977411">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977407"></td>
+                        <td>5977407</td>
+                    	<td>5e02eb34d3772</td>
+                        <td id="port5977407">4</td>
+                        <td id="port5977407">5</td>
+                        <td id="port5977407">6</td>
+                        <td id="port5977407">9</td>
+												
+						<td id="port5977407">MOBIFONE</td>
+						
+                        <td id="port5977407">4</td>
+                        <td id="phonenumber5977407">0778208699</td>                       
+                        <td id="time5977407">25/12/2019 12:11:04</td>
+                        <td id="time5977407">25/12/2019 12:16:11</td>
+						<td id="time5977407">307</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977407">334149</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977407">1-OTP</td>
+					    <td></td>
+                        <td id="type5977407">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977405"></td>
+                        <td>5977405</td>
+                    	<td>5e02eb3427aa4</td>
+                        <td id="port5977405">4</td>
+                        <td id="port5977405">5</td>
+                        <td id="port5977405">6</td>
+                        <td id="port5977405">9</td>
+												
+						<td id="port5977405">MOBIFONE</td>
+						
+                        <td id="port5977405">28</td>
+                        <td id="phonenumber5977405">0907149962</td>                       
+                        <td id="time5977405">25/12/2019 12:09:54</td>
+                        <td id="time5977405">25/12/2019 12:15:55</td>
+						<td id="time5977405">361</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977405">805141</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977405">1-OTP</td>
+					    <td></td>
+                        <td id="type5977405">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977404"></td>
+                        <td>5977404</td>
+                    	<td>5e02eb339df95</td>
+                        <td id="port5977404">4</td>
+                        <td id="port5977404">5</td>
+                        <td id="port5977404">6</td>
+                        <td id="port5977404">9</td>
+												
+						<td id="port5977404">MOBIFONE</td>
+						
+                        <td id="port5977404">4</td>
+                        <td id="phonenumber5977404">0904772522</td>                       
+                        <td id="time5977404">25/12/2019 12:09:54</td>
+                        <td id="time5977404">25/12/2019 12:15:55</td>
+						<td id="time5977404">361</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977404">RVMFHDUE</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977404">1-OTP</td>
+					    <td></td>
+                        <td id="type5977404">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977403"></td>
+                        <td>5977403</td>
+                    	<td>5e02eb306781d</td>
+                        <td id="port5977403">4</td>
+                        <td id="port5977403">5</td>
+                        <td id="port5977403">6</td>
+                        <td id="port5977403">9</td>
+												
+						<td id="port5977403">MOBIFONE</td>
+						
+                        <td id="port5977403">28</td>
+                        <td id="phonenumber5977403">0931481104</td>                       
+                        <td id="time5977403">25/12/2019 12:09:54</td>
+                        <td id="time5977403">25/12/2019 12:15:51</td>
+						<td id="time5977403">357</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977403">506470</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977403">1-OTP</td>
+					    <td></td>
+                        <td id="type5977403">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977402"></td>
+                        <td>5977402</td>
+                    	<td>5e02eb2f016f8</td>
+                        <td id="port5977402">4</td>
+                        <td id="port5977402">5</td>
+                        <td id="port5977402">6</td>
+                        <td id="port5977402">9</td>
+												
+						<td id="port5977402">MOBIFONE</td>
+						
+                        <td id="port5977402">4</td>
+                        <td id="phonenumber5977402">0795101264</td>                       
+                        <td id="time5977402">25/12/2019 12:09:54</td>
+                        <td id="time5977402">25/12/2019 12:15:51</td>
+						<td id="time5977402">357</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977402">189221</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977402">1-OTP</td>
+					    <td></td>
+                        <td id="type5977402">api</td>
+                    </tr>
+                </tbody>
+                                <tbody>
+                    <tr style="witdth:50px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                    	<td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" id="eng_id[]" value="5977401"></td>
+                        <td>5977401</td>
+                    	<td>5e02eb2ea7e0d</td>
+                        <td id="port5977401">4</td>
+                        <td id="port5977401">5</td>
+                        <td id="port5977401">6</td>
+                        <td id="port5977401">9</td>
+												
+						<td id="port5977401">MOBIFONE</td>
+						
+                        <td id="port5977401">28</td>
+                        <td id="phonenumber5977401">0901441725</td>                       
+                        <td id="time5977401">25/12/2019 12:09:54</td>
+                        <td id="time5977401">25/12/2019 12:15:48</td>
+						<td id="time5977401">354</td>
+                                                <td><a href="http://27.72.105.89:8086/vi/7-1-2smsmessageinfo.php?id=5977401">285731</a></td>
+                                            	<td id="SMSResult0"><i class="ico o-ok mr5"></i> Đã gửi</td>
+												<td id="port5977401">1-OTP</td>
+					    <td></td>
+                        <td id="type5977401">api</td>
+                    </tr>
+                </tbody>
+                                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="relative mt20">
+    	<div class="box box3 clearfix">
+            <input class="btn btn1" type="button" onclick="alls()" value="Check All">
+            <i class="ico seperator"></i>
+            <input class="btn btn1" type="button" onclick="unalls()" value="Uncheck All">
+            <i class="ico seperator"></i>
+     
+		  <input class="btn btn1" type="submit" style="float:right" name="Rcvsms" value="Refresh" onclick="return Reflashsms();">
+        </div>
+    </div>
+	
+    <div class="relative mt3">
+    	<div class="clearfix">
+    	<span>2950750 bản ghi&nbsp;&nbsp; 20 bản ghi/Trang</span>&nbsp;&nbsp; <span>1/147538&nbsp;&nbsp;</span> Trang đầu&nbsp;&nbsp; Trang trước&nbsp;&nbsp; <a href="http://27.72.105.89:8086/vi/7-1smsoutbox.php?page=2">Trang tiếp</a>&nbsp;&nbsp;  <a href="http://27.72.105.89:8086/vi/7-1smsoutbox.php?page=147538">Trang cuối</a> &nbsp;&nbsp; (tổng số: 147538 trang)		</div>
+    </div>
+    </div>
+</form>
+
+
+
+<div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>

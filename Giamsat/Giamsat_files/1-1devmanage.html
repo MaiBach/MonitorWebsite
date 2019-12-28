@@ -1,0 +1,995 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="pragma" content="no-cache">
+<title>WEB SMS Center</title>
+<link href="./englobal.css" rel="stylesheet" type="text/css">
+<link href="./encss.css" rel="stylesheet" type="text/css">
+<style>
+	.txtInput{
+		width:60px !important;
+	}
+	.btnReset{
+    	display: inline-block;
+        border: none;
+        vertical-align: middle;
+        cursor: pointer;
+        text-align: center;
+        text-shadow: 1px 1px 1px #4a4848;
+        overflow: hidden;
+        background: #2196f3;
+        color: #fff;
+        border-radius: 3px;
+	}
+    .btnRsDone{
+        background-color:#989292 !important;
+    }
+    .btnRsAll{
+        background-color:#ef1010 !important
+    }
+</style>
+<script type="text/javascript" src="./jquery-1.8.2.js.tải xuống"></script>
+<script>
+function htmlObj(obj)
+{
+	return document.getElementById(obj);
+}
+
+function createAJAX()
+{
+	if (window.XMLHttpRequest)
+	{
+		var oHttp = new XMLHttpRequest();
+		return oHttp;
+	}
+	else if (window.ActiveXObject)
+	{
+		var versions = [
+			"MSXML2.XmlHttp.6.0",
+			"MSXML2.XmlHttp.3.0"
+		];
+
+		for (var i = 0; i < versions.length; i++)
+		{
+			try {
+				var oHttp = new ActiveXObject(versions[i]);
+				return oHttp;
+			} catch (error) {}
+		}
+    	}
+	throw new Error("Your browser doesn't support XMLHttpRequest");
+}
+
+updateCount = 0;
+setTimeout("load_word(1)",1000);
+
+function load_word(flag)
+{
+	if(flag == 0)
+	{
+		load_word_ajax = createAJAX();
+		load_word_ajax.open('POST','monitor-update.php',true);
+		load_word_ajax.onreadystatechange = load_word_change;
+
+		var urlstring = "&action=post";
+		load_word_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		load_word_ajax.send(urlstring);
+		load_word_return=0;
+		updateCount = 0;
+	}
+	else
+	{
+		load_word_ajax = createAJAX();
+		load_word_ajax.open('POST','monitor-update.php',true);
+		load_word_ajax.onreadystatechange = load_word_change;
+
+		var urlstring = "&action=update";
+		load_word_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		load_word_ajax.send(urlstring);
+		load_word_return=0;
+		updateCount++;
+	}
+}
+
+function load_word_change()
+{
+	if (load_word_ajax.readyState == 4)
+	{
+		if(updateCount < 3)
+		{
+			setTimeout("load_word(1)",3000);
+		}
+		else
+		{
+			setTimeout("load_word(0)",3000);
+		}
+
+		if (load_word_ajax.status != 200)
+		{
+			return;
+		}
+
+		try {
+			eval("var arr = "+load_word_ajax.responseText);
+		} catch(e)
+		{
+			return;
+		}
+
+		if (!arr || typeof(arr.lines) == "undefined" )
+		{
+			return;
+		}
+		
+		var html = "";
+		var line = arr.lines;
+		var counter = arr.counter;
+		//Update global
+        htmlObj('totalAccepted').innerHTML = counter.totalAccepted;
+        htmlObj('totalWaiting').innerHTML = counter.totalWaiting;
+
+
+
+        htmlObj('portUpdateTKC').innerHTML = arr.portUpdateTKC;
+        htmlObj('portUpdateTKKM').innerHTML = arr.portUpdateTKKM;
+        var countTinKM = 0;
+		for(var i=0; i<line.totalPort; i++)
+		{
+            var restSMS = line.portMaxAllowed[i]-line.portSent[i];
+            if(line.portState[i] == 1){
+                countTinKM += parseInt(restSMS);
+            }
+
+				// stid = "portType"+String(i);
+				// if(line.portType != -1 && line.portType != "")
+				// {
+				// 	htmlObj(stid).innerHTML = line.portType;
+				// }
+				// else
+				// {
+				// 	htmlObj(stid).innerHTML= "---";
+				// }
+				htmlObj('portMaxAllowed'+String(i)).innerHTML = line.portMaxAllowed[i];
+				htmlObj('portSent'+String(i)).innerHTML = line.portSent[i];
+				htmlObj('portError'+String(i)).innerHTML = (line.sentErrors[i] > 0 ? "<span style=\"color:red;font-weight: bold\">"+line.sentErrors[i]+"</span>" : line.sentErrors[i]);
+				htmlObj('portRenewTimes'+String(i)).innerHTML = (line.maxRenew[i]-line.portRenewTimes[i] == 0 ? "<span style=\"color:#fff;padding:3px;border-radius:5px;background:#CC4F26\">"+line.portRenewTimes[i]+" (max)</span>" : line.portRenewTimes[i]);
+
+				//Tai khoan chinh/TK KM line.portRenewTimes[i]
+				htmlObj('portIMSI'+String(i)).innerHTML = line.portIMSI[i];
+				htmlObj('portPhoneNumber'+String(i)).innerHTML = line.portPhoneNumber[i];
+								
+				if(line.portSIMstatus[i] && line.portSIMstatus[i] != '---'){
+                    htmlObj('portSIMstatus'+String(i)).innerHTML = '<div class="simStatus" data-imsi="'+line.portIMSI[i]+'" data-id="'+i+'" data-idport="'+line.idPort[i]+'">'+(line.portSIMstatus[i] == 0 ? '<span class="simLocked">LOCKED</span>':'<span class="simOK">OK</span>')+'</div>';
+                }
+
+				htmlObj('portTKC'+String(i)).innerHTML = line.portTKC[i];
+				htmlObj('portTKKM'+String(i)).innerHTML = line.portTKKM[i];
+
+				htmlObj('portRest'+String(i)).innerHTML = (restSMS > 0 ? restSMS : 0);
+				// htmlObj('portTime'+String(i)).innerHTML = line.portTimeFrom[i] + ' - '+line.portTimeTo[i];
+
+				stid = "portState"+String(i);
+				if(line.portState[i] == 1 ){
+					htmlObj(stid).innerHTML= "<label class=\"switch\" ><input type=\"checkbox\" checked onClick=\"onSwitchStatus("+i+", 1, "+line.idPort[i]+", "+line.sentErrors[i]+")\"><span class=\"slider round\"></span></label>";
+
+				}else{
+					htmlObj(stid).innerHTML= "<label class=\"switch\" ><input type=\"checkbox\" onClick=\"onSwitchStatus("+i+", 0, "+line.idPort[i]+",  "+line.sentErrors[i]+")\"><span class=\"slider round\"></span></label>";
+				}
+
+                simtid = "simState"+String(i);
+
+            if(line.simState[i] == 0
+                        || line.simState[i] == 1
+						|| line.simState[i] == 9 || line.simState[i] == 2
+						|| line.simState[i] == 3 || line.simState[i] == 4
+						|| line.simState[i] == 5 || line.simState[i] == 6
+						|| line.simState[i] == 7){
+					// htmlObj(simtid).innerHTML= "<i class='ico o-idle mr5'></i> OK";
+				}
+				else//不可用
+				{
+					// htmlObj(simtid).innerHTML= "<i class='ico o-disabled mr5'></i> PAUSED";
+				}
+
+				stid = "portOperator"+String(i);
+				if(line.portOperator[i] != -1 && line.portOperator[i] != "")
+				{
+					htmlObj(stid).innerHTML = line.portOperator[i];
+				}
+				else
+				{
+					htmlObj(stid).innerHTML= "---";
+				}
+
+				stid = "portSignal"+String(i);
+				if(line.portSig[i] >= 0 && line.portSig[i] <= 5)
+					htmlObj(stid).innerHTML= "<i class='ico o-signal0 mr5'></i>";
+				else if(line.portSig[i] > 5 && line.portSig[i] <= 20)
+					htmlObj(stid).innerHTML= "<i class='ico o-signal1 mr5'></i>";
+				else if(line.portSig[i] > 20 && line.portSig[i] <= 40)
+					htmlObj(stid).innerHTML= "<i class='ico o-signal2 mr5'></i>";
+				else if(line.portSig[i] > 40 && line.portSig[i] <= 60)
+					htmlObj(stid).innerHTML= "<i class='ico o-signal3 mr5'></i>";
+				else if(line.portSig[i] > 60 && line.portSig[i] <= 80)
+					htmlObj(stid).innerHTML= "<i class='ico o-signal4 mr5'></i>";
+				else if(line.portSig[i] > 80 && line.portSig[i] <= 100)
+					htmlObj(stid).innerHTML= "<i class='ico o-signal5 mr5'></i>";
+				else 					
+					htmlObj(stid).innerHTML= "<i class='ico o-signal0 mr5'></i>";
+
+		}
+
+        htmlObj('totalSMSKM').innerHTML = countTinKM;
+
+    }
+}
+
+</script>
+<script>
+
+    function resetAllPort(devId){
+        var rsCfm = confirm("Xác nhận reset toàn bộ tin nhắn đã gửi trên device: "+devId);
+        if(rsCfm){
+            var url = 'http://27.72.105.89:8086/api/port/reset_all/devId/'+devId;
+            $("#connBtn2").val("Waiting...");
+            $.get(url, function(data, status){
+                console.log(data);
+                if(data == "OK"){
+                    $("#connBtn2").val("Đã reset");
+                    $("#connBtn2").addClass("btnRsDone");
+                }
+            })
+        }
+    }
+
+    function resetPort(el){
+        var portInfo = $(el);
+        var rsCfm = confirm("Xác nhận reset tin nhắn đã gửi ("+portInfo.data('sent')+" tin) trên port "+portInfo.data('portid')+"?");
+        if(rsCfm){
+            var url = 'http://27.72.105.89:8086/api/port/reset/id/'+portInfo.data('portid');
+            portInfo.val("Waiting...");
+            $.get(url, function(data, status){
+                console.log(data);
+                if(data == "OK"){
+                    portInfo.val("Đã reset");
+                    portInfo.addClass("btnRsDone");
+                }
+            })
+        }
+    }
+
+
+
+    function ussd(devId, msg){
+        var url = 'http://27.72.105.89:8086/api/monitor/ussd/devId/'+devId+'/msg/'+msg;
+        $("#checkTKC").attr('disabled', 'disabled');
+        $("#checkTKKM").attr('disabled', 'disabled');
+        if(msg == "101"){
+            $("#checkTKC").html('<img class="imgLoading" src="loading.gif"> Đang lấy dữ liệu...');
+            $("#checkTKC").addClass('btnLoading');
+        }else{
+            $("#checkTKKM").html('<img class="imgLoading" src="loading.gif"> Đang lấy dữ liệu...');
+            $("#checkTKKM").addClass('btnLoading');
+        }
+        $.get(url, function(data, status){
+            $("#checkTKC").removeAttr('disabled');
+            $("#checkTKKM").removeAttr('disabled');
+            if(msg == "101"){
+                $("#checkTKC").removeClass('btnLoading');
+                $("#checkTKC").html('TK Chính');
+            }else{
+                $("#checkTKKM").removeClass('btnLoading');
+                $("#checkTKKM").html('TK Khuyến mại');
+            }
+        });
+    }
+
+    function recheckUSSD(devId, msg){
+        var url = 'http://27.72.105.89:8086/api/monitor/query_ussd/devId/'+devId+'/msg/'+msg;
+        $("#recheckTKC").attr('disabled', 'disabled');
+        $("#recheckTKKM").attr('disabled', 'disabled');
+        if(msg == '101'){
+            $("#recheckTKC").html('Loading...');
+        }else{
+            $("#recheckTKKM").html('Loading...');
+        }
+        $.get(url, function(data, status){
+            $("#recheckTKC").removeAttr('disabled');
+            $("#recheckTKKM").removeAttr('disabled');
+            if(msg == "101"){
+                $("#recheckTKC").removeClass('btnLoading');
+                $("#recheckTKC").html('Re-check');
+            }else{
+                $("#recheckTKKM").removeClass('btnLoading');
+                $("#recheckTKKM").html('Re-check');
+            }
+        })
+    }
+
+	function resetState(portId, id, sent){
+		var rsCfm = confirm("Xác nhận reset tin nhắn đã gửi ("+sent+" tin) trên port "+portId+"?");
+		if(rsCfm){
+			window.location.href='monitor-port.php?reset='+id+'&dev=7';
+		}
+	}
+	function onSelectDev(){
+		var j = document.getElementById("devId").value;
+		window.location.href='monitor.php?dev='+j;
+	}
+	function onSwitchStatus(portId, curStt, idPort, errNum){
+        // var rsCfm = confirm("Xác nhận đổi trạng thái của port "+portId+"?");
+        var newStatus;
+        // if(rsCfm){
+            if(curStt == 1){
+                newStatus = 0;
+            }else{
+                newStatus = 1;
+            }
+            var url = 'http://27.72.105.89:8086/api/monitor/change_port/devId/7/idPort/'+idPort+'/status/'+newStatus+'/errNum/'+errNum;
+            $.get(url, function(data, status) {
+                console.log(data);
+            })
+        // }else{
+        //     return;
+        // }
+    }
+    $(document).on('click', '.simStatus', function(e) {
+        console.log(this);
+        var imsi = $(this).data('imsi');
+        var idport = $(this).data('idport');
+        var status = $(this).children().text();
+        console.log(status);
+        $(this).children().removeClass(status == 'LOCKED' ? 'simLocked': 'simOK');
+        $(this).children().addClass(status == 'LOCKED' ? 'simOK': 'simLocked');
+        $(this).children().text(status == 'LOCKED' ? 'OK': 'LOCKED');
+        var url = 'http://27.72.105.89:8086/api//monitor/sim/imsi/'+imsi+'/status/'+(status == 'LOCKED' ? 1 : 0)+'/idPort/'+idport;
+        $.get(url, function(data, status){
+            console.log(data);
+        })
+    })
+</script>
+    <style type="text/css">
+        .btnRecheck{
+            font-size: 8pt !important;;
+            padding: 1px !important;;
+            background: #2196f3 !important;;
+            border: 1px solid #2196f3 !important;;
+            border-radius: 3px !important;
+        }
+        .imgLoading{
+            float: left;
+            margin-right: 3px;
+        }
+        .btnLoading{
+            background: white !important;
+            border: 1px solid #e26d05 !important;
+            color: #e26d05 !important;
+        }
+        .btnCheck{
+            display: inline-block;
+            border: 1px solid #e26d05;
+            /* vertical-align: middle; */
+            cursor: pointer;
+            text-align: center;
+            text-shadow: 1px 1px 1px #cccc;
+            overflow: hidden;
+            padding: 3px;
+            background: #e26d05;
+            color: #fff;
+        }
+        .btnCheck:disabled,
+        .btnCheck[disabled]{
+            border: 1px solid #999999;
+            background-color: #cccccc;
+            color: #666666;
+        }
+        #portUpdateTKC, #portUpdateTKKM{
+            /*font-size: 8pt;*/
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 23px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        tr#tblMonitor:hover{
+            background-color: #e9f1df;
+            outline: 1px solid #6fabe6;
+        }
+        .deviceStats{
+            float: right;
+            border: 1px solid #2196f3;
+            border-radius: 3px;
+            padding: 3px;
+            margin-left: 5px;
+        }
+        .simLocked{
+            color:red;
+            border:1px solid red;
+            border-radius: 3px;
+            padding:2px;
+        }
+        .simLocked:hover{
+            cursor: pointer;
+            background:red;
+            color:#fff;
+        }
+        .simOK{
+            width:120px;
+            color:green;
+            border:1px solid green;
+            border-radius: 3px;
+            padding:2px;
+        }
+        .simOK:hover{
+            cursor: pointer;
+            background:green;
+            color:#fff;
+        }
+    </style>
+</head>
+<body>
+<form name="myform" method="post" action="http://27.72.105.89:8086/vi/monitor.php?dev=7">
+<table width="100%" align="center">
+<tbody><tr>
+<td>
+<div class="main">
+	<div class="clearfix">
+		<div class="relative mt20">
+		<div class="status">
+			Monitor trạng thái dịch vụ device
+<select name="devId" id="devId" onchange="onSelectDev()">
+            <option value="1">SMG4032 Dev1 DevId: 1 (IP: 10.148.10.246)
+		-&gt;PAUSED		</option>
+                <option value="2">SMG4016 DP DevId: 2 (IP: 10.148.10.216)
+		-&gt;PAUSED		</option>
+                <option value="3">SMG32-202 DEV3 DevId: 3 (IP: 10.148.10.202)
+		-&gt;PAUSED		</option>
+                <option value="5">GW 200 DEV 5  DevId: 5 (IP: 10.148.10.200)
+		-&gt;PAUSED		</option>
+                <option value="6">GW  DEV-6 DevId: 6 (IP: 10.148.10.221)
+		-&gt;PAUSED		</option>
+                <option value="7" selected="">GW  206 DP DEV 7 DevId: 7 (IP: 10.148.10.206)
+		-&gt;PAUSED		</option>
+                <option value="8">VINA BHS DevId: 8 (IP: 172.16.1.225)
+		-&gt;PAUSED		</option>
+                <option value="9">Mobi NamDinh Dev9 DevId: 9 (IP: 27.72.110.203)
+		-&gt;PAUSED		</option>
+                <option value="10">GW32 Du phong DevId: 10 (IP: 27.72.110.202)
+		-&gt;PAUSED		</option>
+                <option value="11">GW16 BHS DevId: 11 (IP: 172.16.10.225)
+		-&gt;PAUSED		</option>
+        </select>
+
+		</div>
+            <div style="padding:10px;background:#fff">
+                Kiểm tra:
+                <button type="button" class="btnCheck" id="checkTKC" onclick="ussd(7, &#39;101&#39;)">TK Chính</button>
+                (cập nhật: <span id="portUpdateTKC">10:11:21 14/11/2019</span>)
+                <button type="button" class="btnCheck" id="checkTKKM" onclick="ussd(7, &#39;102&#39;)">TK Khuyến mại</button>
+                (cập nhật: <span id="portUpdateTKKM">10:14:22 13/09/2019</span>)
+
+                <div class="deviceStats">
+                    Tổng SMS còn lại: <span id="totalSMSKM" style="font-weight: bold;color:green">800</span>
+                </div>
+
+                <div class="deviceStats">
+                    Đang xử lý: <span id="totalAccepted" style="font-weight: bold;color:blue">0</span>
+                </div>
+                <div class="deviceStats">
+                    Chờ xử lý: <span id="totalWaiting" style="font-weight: bold;color:red">35</span>
+                </div>
+
+            </div>
+			<div class="box box2 box4" style="overflow-x:auto;">
+				<div class="table">
+				<table class="wid1">
+				<thead>
+					<tr>
+						<th class="t1">PortId</th>
+<!--						<th>Thời gian</th>-->
+						<th>Số tin</th>
+						<th>Đã gửi</th>
+						<th>Còn lại</th>
+                        <th>Tin lỗi</th>
+						<th>Gia hạn</th>
+						<th>Sim IMEI</th>
+						<th>SĐT</th>
+						<th>TT sim</th>
+						<th>TK Chính
+                            <!--<button type="button" id="recheckTKC" class="btnCheck btnRecheck" onClick="recheckUSSD(7, '101')">Re-check</button>-->
+                        </th>
+						<th>Tin KM
+                            <!--<button type="button" id="recheckTKKM" class="btnCheck btnRecheck" onClick="recheckUSSD(7, '102')">Re-check</button>-->
+                        </th>
+						<th>Port Status</th>
+<!--						<th>SIM Status</th>-->
+						<th>Telco</th>
+						<th><input id="connBtn2" class="btnReset blue-btn29 poplight btnRsAll" name="connect" type="button" onclick="resetAllPort(7)" value="Reset All"></th>
+					</tr>
+				</thead>
+				<tbody>
+									<tr id="tblMonitor">
+						<td class="t1">0</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed0">50</td>
+						
+						<td id="portSent0">0</td>
+						
+						<td id="portRest0">50</td>
+						<td id="portError0">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes0">0</span></td>
+                        <td id="portIMSI0">61667</td>
+                        <td id="portPhoneNumber0"></td>
+                        <td id="portSIMstatus0" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC0" style="text-align:right;">500,000</td>
+						<td id="portTKKM0">0</td>
+						<td id="portState0"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(0, 1, 176, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator0">VINAPHONE</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal0"><i class="ico o-signal5 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="0" data-id="176" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">1</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed1">50</td>
+						
+						<td id="portSent1">0</td>
+						
+						<td id="portRest1">50</td>
+						<td id="portError1">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes1">0</span></td>
+                        <td id="portIMSI1">61678</td>
+                        <td id="portPhoneNumber1"></td>
+                        <td id="portSIMstatus1" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC1" style="text-align:right;">500,000</td>
+						<td id="portTKKM1">0</td>
+						<td id="portState1"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(1, 1, 177, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator1">VINAPHONE</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal1"><i class="ico o-signal5 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="1" data-id="177" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">2</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed2">50</td>
+						
+						<td id="portSent2">0</td>
+						
+						<td id="portRest2">50</td>
+						<td id="portError2">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes2">0</span></td>
+                        <td id="portIMSI2">61640</td>
+                        <td id="portPhoneNumber2"></td>
+                        <td id="portSIMstatus2" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC2" style="text-align:right;">500,000</td>
+						<td id="portTKKM2">0</td>
+						<td id="portState2"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(2, 1, 178, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator2">VINAPHONE</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal2"><i class="ico o-signal5 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="2" data-id="178" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">3</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed3">50</td>
+						
+						<td id="portSent3">0</td>
+						
+						<td id="portRest3">50</td>
+						<td id="portError3">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes3">0</span></td>
+                        <td id="portIMSI3">61705</td>
+                        <td id="portPhoneNumber3">---</td>
+                        <td id="portSIMstatus3" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC3" style="text-align:right;">500,000</td>
+						<td id="portTKKM3">0</td>
+						<td id="portState3"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(3, 1, 179, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator3">VINAPHONE</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal3"><i class="ico o-signal5 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="3" data-id="179" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">4</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed4">50</td>
+						
+						<td id="portSent4">0</td>
+						
+						<td id="portRest4">50</td>
+						<td id="portError4">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes4">0</span></td>
+                        <td id="portIMSI4">61641</td>
+                        <td id="portPhoneNumber4">---</td>
+                        <td id="portSIMstatus4" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC4" style="text-align:right;">500,000</td>
+						<td id="portTKKM4">0</td>
+						<td id="portState4"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(4, 1, 180, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator4">VINAPHONE</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal4"><i class="ico o-signal5 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="4" data-id="180" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">5</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed5">50</td>
+						
+						<td id="portSent5">0</td>
+						
+						<td id="portRest5">50</td>
+						<td id="portError5">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes5">0</span></td>
+                        <td id="portIMSI5">61680</td>
+                        <td id="portPhoneNumber5">---</td>
+                        <td id="portSIMstatus5" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC5" style="text-align:right;">500,000</td>
+						<td id="portTKKM5">0</td>
+						<td id="portState5"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(5, 1, 181, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator5">VINAPHONE</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal5"><i class="ico o-signal5 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="5" data-id="181" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">6</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed6">50</td>
+						
+						<td id="portSent6">0</td>
+						
+						<td id="portRest6">50</td>
+						<td id="portError6">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes6">0</span></td>
+                        <td id="portIMSI6">61681</td>
+                        <td id="portPhoneNumber6">---</td>
+                        <td id="portSIMstatus6" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC6" style="text-align:right;">500,000</td>
+						<td id="portTKKM6">0</td>
+						<td id="portState6"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(6, 1, 182, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator6">---</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal6"><i class="ico o-signal0 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="6" data-id="182" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">7</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed7">50</td>
+						
+						<td id="portSent7">0</td>
+						
+						<td id="portRest7">50</td>
+						<td id="portError7">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes7">0</span></td>
+                        <td id="portIMSI7">61703</td>
+                        <td id="portPhoneNumber7">---</td>
+                        <td id="portSIMstatus7" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC7" style="text-align:right;">500,000</td>
+						<td id="portTKKM7">0</td>
+						<td id="portState7"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(7, 1, 183, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator7">---</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal7"><i class="ico o-signal0 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="7" data-id="183" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">8</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed8">50</td>
+						
+						<td id="portSent8">0</td>
+						
+						<td id="portRest8">50</td>
+						<td id="portError8">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes8">0</span></td>
+                        <td id="portIMSI8">61679</td>
+                        <td id="portPhoneNumber8">---</td>
+                        <td id="portSIMstatus8" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC8" style="text-align:right;">500,000</td>
+						<td id="portTKKM8">0</td>
+						<td id="portState8"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(8, 1, 184, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator8">---</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal8"><i class="ico o-signal0 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="8" data-id="184" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">9</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed9">50</td>
+						
+						<td id="portSent9">0</td>
+						
+						<td id="portRest9">50</td>
+						<td id="portError9">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes9">0</span></td>
+                        <td id="portIMSI9">61634</td>
+                        <td id="portPhoneNumber9">---</td>
+                        <td id="portSIMstatus9" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC9" style="text-align:right;">500,000</td>
+						<td id="portTKKM9">0</td>
+						<td id="portState9"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(9, 1, 185, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator9">---</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal9"><i class="ico o-signal0 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="9" data-id="185" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">10</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed10">50</td>
+						
+						<td id="portSent10">0</td>
+						
+						<td id="portRest10">50</td>
+						<td id="portError10">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes10">0</span></td>
+                        <td id="portIMSI10">61677</td>
+                        <td id="portPhoneNumber10">---</td>
+                        <td id="portSIMstatus10" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC10" style="text-align:right;">500,000</td>
+						<td id="portTKKM10">0</td>
+						<td id="portState10"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(10, 1, 186, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator10">---</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal10"><i class="ico o-signal0 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="10" data-id="186" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">11</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed11">50</td>
+						
+						<td id="portSent11">0</td>
+						
+						<td id="portRest11">50</td>
+						<td id="portError11">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes11">0</span></td>
+                        <td id="portIMSI11">61704</td>
+                        <td id="portPhoneNumber11">---</td>
+                        <td id="portSIMstatus11" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC11" style="text-align:right;">500,000</td>
+						<td id="portTKKM11">0</td>
+						<td id="portState11"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(11, 1, 187, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator11">---</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal11"><i class="ico o-signal0 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="11" data-id="187" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">12</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed12">50</td>
+						
+						<td id="portSent12">0</td>
+						
+						<td id="portRest12">50</td>
+						<td id="portError12">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes12">0</span></td>
+                        <td id="portIMSI12">61633</td>
+                        <td id="portPhoneNumber12">---</td>
+                        <td id="portSIMstatus12" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC12" style="text-align:right;">500,000</td>
+						<td id="portTKKM12">0</td>
+						<td id="portState12"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(12, 1, 188, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator12">---</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal12"><i class="ico o-signal0 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="12" data-id="188" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">13</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed13">50</td>
+						
+						<td id="portSent13">0</td>
+						
+						<td id="portRest13">50</td>
+						<td id="portError13">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes13">0</span></td>
+                        <td id="portIMSI13">61613</td>
+                        <td id="portPhoneNumber13">---</td>
+                        <td id="portSIMstatus13" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC13" style="text-align:right;">500,000</td>
+						<td id="portTKKM13">0</td>
+						<td id="portState13"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(13, 1, 189, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator13">---</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal13"><i class="ico o-signal0 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="13" data-id="189" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">14</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed14">50</td>
+						
+						<td id="portSent14">0</td>
+						
+						<td id="portRest14">50</td>
+						<td id="portError14">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes14">0</span></td>
+                        <td id="portIMSI14">61644</td>
+                        <td id="portPhoneNumber14">---</td>
+                        <td id="portSIMstatus14" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC14" style="text-align:right;">500,000</td>
+						<td id="portTKKM14">---</td>
+						<td id="portState14"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(14, 1, 190, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator14">---</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal14"><i class="ico o-signal0 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="14" data-id="190" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+									<tr id="tblMonitor">
+						<td class="t1">15</td>
+<!--						<td id="portTime--><!--">--><!-- - --><!--</td>-->
+						<td id="portMaxAllowed15">50</td>
+						
+						<td id="portSent15">0</td>
+						
+						<td id="portRest15">50</td>
+						<td id="portError15">0</td>
+
+						<td style="color:blue;">
+						
+                            <span id="portRenewTimes15">0</span></td>
+                        <td id="portIMSI15">61676</td>
+                        <td id="portPhoneNumber15">---</td>
+                        <td id="portSIMstatus15" title="Thay đổi trạng thái">---</td>
+                        <td id="portTKC15" style="text-align:right;">500,000</td>
+						<td id="portTKKM15">0</td>
+						<td id="portState15"><label class="switch"><input type="checkbox" checked="" onclick="onSwitchStatus(15, 1, 191, 0)"><span class="slider round"></span></label></td>
+<!--						<td id='simState--><!--'></td>-->
+						<td>
+                            <span id="portOperator15">---</span>
+                            <span style="float: left;margin-top: 3px;" id="portSignal15"><i class="ico o-signal0 mr5"></i></span>
+                        </td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight" name="connect" type="button" data-portid="15" data-id="191" data-sent="0" onclick="resetPort(this)" value="Reset"></td>
+					</tr>
+								</tbody>
+				</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+</form>
+
+
+
+</body></html>

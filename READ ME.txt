@@ -1,0 +1,1 @@
+Sử dụng phần mêm Notepad++ để đọc và chinh sửa mã.

@@ -1,0 +1,617 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="pragma" content="no-cache">
+    <title>WEB SMS Center</title>
+    <link href="./englobal.css" rel="stylesheet" type="text/css">
+    <link href="./encss.css" rel="stylesheet" type="text/css">
+    <style>
+        .txtInput{
+            width:60px !important;
+        }
+        .btnReset{
+            display: inline-block;
+            border: none;
+            vertical-align: middle;
+            cursor: pointer;
+            text-align: center;
+            text-shadow: 1px 1px 1px #fff;
+            overflow: hidden;
+        }
+        .txtAdd{
+            width: 90%;
+        }
+        .btnAdd{
+            background: #5ca0e2 !important;
+            color: #fff !important;
+            text-shadow: none !important;
+        }
+        .btnRemove{
+            background: #d61b1b !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <script type="text/javascript" src="./jquery-1.8.2.js.tải xuống"></script>
+<script>
+    function updateContent(e){
+        var url = 'system_config.php?update';
+        var configId = $(e).data('id');
+        var configValue = $('#configValue-'+configId).val();
+        var configNotes = $('#configNotes-'+configId).val();
+        $.post(url, {configId: configId, configValue: configValue, configNotes:configNotes}, function(data, status){
+            if(data == "OK"){
+                alert('Đã lưu dữ liệu!');
+            }else{
+                alert('Không thể lưu dữ liệu, vui lòng thử lại!');
+            }
+        })
+    }
+
+</script>
+</head>
+<body>
+<table width="100%" align="center">
+<tbody><tr>
+<td>
+<div class="main">
+	<div class="clearfix">
+		<div class="relative mt20">
+		<div class="status">
+			Cấu hình chung hệ thống
+		</div>
+			<div class="" style="overflow-x:auto;">
+				<div class="table" style="width: 99.5% !important;">
+				<table class="table">
+				<thead>
+					<tr>
+						<th class="t1">#</th>
+						<th>Mã cấu hình</th>
+						<th>Giá trị</th>
+						<th>Ghi chú</th>
+						<th>Tác vụ</th>
+					</tr>
+				</thead>
+				<tbody>
+				<form name="myform" method="post" action="http://27.72.105.89:8086/vi/system_config.php"></form>
+				<tr style="background: #b0d2f1;">
+						<td class="t1"></td>
+						<td><input type="text" name="configCode" class="txtAdd"></td>
+                    <td style="width:30%"><input type="text" name="configValue" class="txtAdd"></td>
+                    <td style="width:50%"><input type="text" name="configNotes" class="txtAdd"></td>
+						<td><input id="connBtn1" class="btnReset blue-btn29 poplight btnAdd" name="add" type="submit" value="Thêm mới"></td>
+					</tr>
+					
+									<tr id="row-40">
+						<td class="t1">1</td>
+						<td>sms_center_Gmobile</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-40" value="84900000023;84900000066">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-40" value="Số Trung tâm tin nhắn Gtel - Gmobile;841998440000; Lưu ý: Nếu chạy sim của nhà mạng nào thì dùng TTTN (smsc) nhà mạng đó">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="40" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-39">
+						<td class="t1">2</td>
+						<td>sms_center_Vietnamobile</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-39" value="84900000023;84900000066">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-39" value="Số Trung tâm tin nhắn Vietnamobile,cac SMSC cach nhau dau (;) 84920210015">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="39" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-38">
+						<td class="t1">3</td>
+						<td>sms_center_Viettel</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-38" value="">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-38" value="Số Trung tâm tin nhắn Viettel,cac SMSC cach nhau dau ( ; ) 84980200030">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="38" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-37">
+						<td class="t1">4</td>
+						<td>sms_center_Vinaphone</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-37" value="">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-37" value="Số trung tâm tin nhắn Vinaphone, cac SMSC cach nhau dau (;) 8491020005">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="37" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-36">
+						<td class="t1">5</td>
+						<td>sms_center_Mobifone</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-36" value="84900000023;84900000066">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-36" value="Số trung tâm tin nhắn mạng Mobifone, cac SMSC cach nhau dau ( ; ) Ví dụ: 84900000023;84900000066">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="36" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-35">
+						<td class="t1">6</td>
+						<td>topup_times_per_day</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-35" value="3">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-35" value="Số lần cho phép nạp thẻ hộ trong ngày trên 1 sim.">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="35" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-34">
+						<td class="t1">7</td>
+						<td>topup_sleep_result</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-34" value="10">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-34" value="Số giây (s) chờ để lấy dữ liệu từ Gateway về.">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="34" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-33">
+						<td class="t1">8</td>
+						<td>topup_sleep_request</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-33" value="5">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-33" value="Số giây (s) chờ để gửi request tiếp theo">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="33" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-32">
+						<td class="t1">9</td>
+						<td>topup_regex_amount</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-32" value="/([0-9]+)d/">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-32" value="Regex kiểm tra số tiền nạp nếu thành công">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="32" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-31">
+						<td class="t1">10</td>
+						<td>topup_regex_result</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-31" value="/(da nap thanh cong)/">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-31" value="Regex, Kiểm tra xem giao dịch có hoàn thành hay không?">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="31" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-30">
+						<td class="t1">11</td>
+						<td>topup_regex_allow</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-30" value="/(nhap so dien thoai can nap the)/">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-30" value="Regex, kiểm tra nội dung trả về có đủ điều kiện nạp tiền hay không?">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="30" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-29">
+						<td class="t1">12</td>
+						<td>second_to_send_cskh_Gmobile</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-29" value="60">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-29" value="Số giây Intval để gửi tin chăm sóc khách hàng Gmobile">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="29" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-28">
+						<td class="t1">13</td>
+						<td>second_to_send_otp_Gmobile</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-28" value="30">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-28" value="Số giây intval để gửi tin OTP Gmobile">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="28" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-27">
+						<td class="t1">14</td>
+						<td>second_to_send_cskh_Vietnamobile</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-27" value="30">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-27" value="Số giây Intval để gửi tin chăm sóc khách hàng Vietnamobile">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="27" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-26">
+						<td class="t1">15</td>
+						<td>second_to_send_otp_Vietnamobile</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-26" value="60">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-26" value="Số giây intval để gửi tin OTP Vietnamobile">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="26" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-25">
+						<td class="t1">16</td>
+						<td>second_to_send_cskh_Vinaphone</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-25" value="120">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-25" value="Số giây Intval để gửi tin chăm sóc khách hàng Vinaphone">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="25" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-24">
+						<td class="t1">17</td>
+						<td>second_to_send_otp_Vinaphone</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-24" value="60">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-24" value="Số giây intval để gửi tin OTP Vinaphone">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="24" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-23">
+						<td class="t1">18</td>
+						<td>second_to_send_cskh_Mobifone</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-23" value="5">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-23" value="Số giây Intval để gửi tin chăm sóc khách hàng Mobifone ">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="23" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-22">
+						<td class="t1">19</td>
+						<td>second_to_send_otp_Mobifone</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-22" value="5">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-22" value="Số giây intval để gửi tin OTP Mobifone">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="22" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-21">
+						<td class="t1">20</td>
+						<td>second_to_send_cskh_Viettel</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-21" value="100">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-21" value="Số giây Intval để gửi tin chăm sóc khách hàng Viettel">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="21" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-20">
+						<td class="t1">21</td>
+						<td>second_to_send_otp_Viettel</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-20" value="60">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-20" value="Số giây intval để gửi tin OTP Viettel">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="20" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-19">
+						<td class="t1">22</td>
+						<td>num_per_block_Gmobile</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-19" value="15">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-19" value="Số lượng tin nhắn gửi đi mỗi Block đến gateway Gmobile">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="19" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-18">
+						<td class="t1">23</td>
+						<td>num_per_block_Vietnamobile</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-18" value="30">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-18" value="Số lượng tin nhắn gửi đi mỗi Block đến gateway Vietnamobile">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="18" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-17">
+						<td class="t1">24</td>
+						<td>num_per_block_Vinaphone</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-17" value="13">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-17" value="Số lượng tin nhắn gửi đi mỗi Block đến gateway Viinaphone">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="17" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-16">
+						<td class="t1">25</td>
+						<td>num_per_block_Mobifone</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-16" value="28">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-16" value="Số lượng tin nhắn gửi đi mỗi Block đến gateway Mobifone( tùy theo từng  GW 32 port hoặc 16 port...)">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="16" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-15">
+						<td class="t1">26</td>
+						<td>num_per_block_Viettel</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-15" value="31">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-15" value="Số lượng tin nhắn gửi đi mỗi Block đến gateway Viettel">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="15" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-14">
+						<td class="t1">27</td>
+						<td>timeout_sending_purge</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-14" value="1000">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-14" value="Mặc định 10 phút format (MMSS)">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="14" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-13">
+						<td class="t1">28</td>
+						<td>renew_phone_alert</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-13" value="0988727587,0968972473,0984666002">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-13" value="Danh sách các số nhận thông báo gia hạn">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="13" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-12">
+						<td class="t1">29</td>
+						<td>renew_content_alert</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-12" value="Port {port} tren GW {gateway} da het han muc SMS lan {renewTimes}, vui long kiem tra!">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-12" value="Nội dung tin nhắn thông báo khi gia hạn, các biến có thể sử dụng {port}, {gateway},  {renewTimes}">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="12" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-11">
+						<td class="t1">30</td>
+						<td>renew_alert</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-11" value="0">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-11" value="Gửi tin thông báo khi 1 port gia hạn. 1: Active/0: Disable">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="11" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-10">
+						<td class="t1">31</td>
+						<td>renew_when_lower_than</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-10" value="1">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-10" value="Tự động gia hạn khi số lượng tin còn lại nhỏ hơn hoặc bằng giá trị này trong mỗi port">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="10" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-9">
+						<td class="t1">32</td>
+						<td>retry_in_task_queue</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-9" value="2">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-9" value="Số lần retry tin CSKH trong queue renew">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="9" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-8">
+						<td class="t1">33</td>
+						<td>retry_in_main_queue</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-8" value="2">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-8" value="Số lần retry tin CSKH trong queue chính">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="8" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-7">
+						<td class="t1">34</td>
+						<td>errnum_to_disable_port</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-7" value="10">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-7" value="Max tin nhắn lỗi được cho phép, đạt đến giá trị này sim sẽ tự động disabled">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="7" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-6">
+						<td class="t1">35</td>
+						<td>sms_waiting_per_port</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-6" value="3">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-6" value="Tin nhắn chờ trên mỗi Port (waiting sms per port), theo dõi mục tin đang xử lý,  nên &lt;= 100 sms/gateway">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="6" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-5">
+						<td class="t1">36</td>
+						<td>max_second_to_skip_otp</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-5" value="-1">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-5" value="Chi lay cac tin nhan tu thoi diem hien tai + 300s tro ve truoc ưu tiên tin mới, giá trị -1 bỏ qua">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="5" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-4">
+						<td class="t1">37</td>
+						<td>second_to_send_cskh</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-4" value="140">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-4" value="Số giây Intval để gửi tin chăm sóc khách hàng deffault">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="4" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-3">
+						<td class="t1">38</td>
+						<td>second_to_send_otp</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-3" value="2">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-3" value="Số giây intval để gửi tin OTP default">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="3" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-2">
+						<td class="t1">39</td>
+						<td>second_per_api_request</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-2" value="3">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-2" value="">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="2" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+									<tr id="row-1">
+						<td class="t1">40</td>
+						<td>num_per_block</td>
+						<td>
+                            <input style="width:90%;padding:3px" id="configValue-1" value="16">
+                        </td>
+                        <td>
+                            <input style="width:90%;padding:3px;" id="configNotes-1" value="Số lượng tin nhắn gửi đi mỗi Block đến gateway default">
+                        </td>
+						<td>
+                            <input id="btnUpdate" title="Cập nhật" class="btnReset blue-btn29 poplight btnAdd" name="btnUpdate" type="button" data-id="1" onclick="updateContent(this)" value="Cập nhật">
+                        </td>
+					</tr>
+								</tbody>
+				</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</td>
+</tr>
+</tbody></table>
+
+
+
+</body></html>

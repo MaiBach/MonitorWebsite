@@ -1,0 +1,251 @@
+@charset "utf-8";
+/* 清除内外边距 */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
+dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
+pre, /* text formatting elements 文本格式元素 */
+form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */
+th, td /* table elements 表格元素 */{
+	margin:0;
+	padding:0;
+}
+
+/* 设置默认字体 */
+body, button, input, select, textarea /* for ie */{font:12px/1.5 arial, \5b8b\4f53, arial, \5FAE\8F6F\96C5\9ED1, tahoma, sans-serif;}
+h1, h2, h3, h4, h5, h6{font-size:100%;}
+address, cite, dfn, em, var{font-style:normal;} /* 将斜体扶正 */
+code, kbd, pre, samp{font-family:Arial, courier new, courier, monospace;} /* 统一等宽字体 */
+small{font-size:12px;} /* 小于 12px 的中文很难阅读，让 small 正常化 */
+
+/* 设置默认字体颜色 */
+body{color:#505559;}
+
+/* 重置列表元素 */
+ul, ol{list-style:none;}
+
+/* 重置文本格式元素 */
+.blacklink a{text-decoration:none;color:#000;}
+.blacklink a:hover{text-decoration:underline;}
+.nounderline a{text-decoration:none;}
+.nounderline a:hover{text-decoration:underline;}
+sup{vertical-align:text-top;} /* 重置，减少对行高的影响 */
+sub{vertical-align:text-bottom;}
+
+/* 重置表单元素 */
+legend{color:#000;} /* for ie6 */
+fieldset, img{border:0;} /* img 搭车：让链接里的 img 无边框 */
+img{-ms-interpolation-mode:bicubic;} /* IE6&7 解决图片改变尺寸后失真 */
+button, input, select, textarea{font-size:100%;} /* 使得表单元素在 ie 下能继承字体大小 */
+
+/* 重置表格元素 */
+table{border-collapse:collapse; border-spacing:0;}
+
+/* 重置鼠标样式 */
+input[type="button"], input[type="submit"], select, button{cursor:pointer;}
+
+/* 重置 HTML5 元素 */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video{
+	display:block;
+	margin:0;
+	padding:0;
+}
+
+/* UP360 CSS LAYOUT */
+
+/* 定义通用字体颜色 */
+.c000{color:#000;} /* 黑色 */
+.cfff{color:#fff;} /* 白色 */
+.cf00{color:#f00;} /* 红色 */
+.c333{color:#333;} /* 加深字体颜色 */
+.c666{color:#666;} /* 普通字体颜色 */
+.c999{color:#999;} /* 变浅字体颜色 */
+.cf60{color:#f60;} /* 橙色 */
+.blue{color:#248ad2;}
+.blue1{color:#3890e1;}
+
+/* 定义通用字体类型 */
+.ffYH{font-family:\5FAE\8F6F\96C5\9ED1;} /* 微软雅黑 */
+.ffGE{font-family:Georgia;} /* Georgia,用于显示数字 */
+
+/* 定义通用字体大小及粗细 */
+.f0{font-size:0;}
+.f11{font-size:11px;}
+.f12{font-size:12px;}
+.f12b{font-size:12px; font-weight:700;}
+.f14{font-size:14px;}
+.f14b{font-size:14px; font-weight:700;}
+.f16{font-size:16px;}
+.f18{font-size:18px;}
+.f20{font-size:20px;}
+.f30b{font-size:30px; font-weight:700;}
+.fwb{font-weight:700;} /* 字体加粗 */
+.fwn{font-weight:400;} /* 字体正常 */
+.fsn{font-style:normal;}
+
+/* 定义通用内边距尺寸 */
+.p5{padding:5px;}
+.p10{padding:10px;}
+.p15{padding:15px;}
+.p20{padding:20px;}
+.pt5{padding-top:5px;}
+.pt10{padding-top:10px;}
+.pt15{padding-top:15px;}
+.pt20{padding-top:20px;}
+.pb5{padding-bottom:5px;}
+.pb10{padding-bottom:10px;}
+.pb15{padding-bottom:15px;}
+.pb20{padding-bottom:20px;}
+.pl5{padding-left:5px;}
+.pl10{padding-left:10px;}
+.pl15{padding-left:15px;}
+.pl20{padding-left:20px;}
+.pr5{padding-right:5px;}
+.pr10{padding-right:10px;}
+.pr15{padding-right:15px;}
+.pr20{padding-right:20px;}
+
+/* 定义通用外边距尺寸 */
+.mauto{margin-left:auto; margin-right:auto;} /* 定义margin居中的样式 */
+.m5{margin:5px;}
+.m10{margin:10px;}
+.m15{margin:15px;}
+.m20{margin:20px;}
+.mt5{margin-top:5px;}
+.mt10{margin-top:10px;}
+.mt15{margin-top:15px;}
+.mt20{margin-top:20px;}
+.mt30{margin-top:30px;}
+.mt40{margin-top:40px;}
+.mt50{margin-top:50px;}
+.mb5{margin-bottom:5px;}
+.mb10{margin-bottom:10px;}
+.mb15{margin-bottom:15px;}
+.mb20{margin-bottom:20px;}
+.ml5{margin-left:5px;}
+.ml10{margin-left:10px;}
+.ml15{margin-left:15px;}
+.ml20{margin-left:20px;}
+.ml25{margin-left:25px;}
+.ml30{margin-left:30px;}
+.mr5{margin-right:5px;}
+.mr10{margin-right:10px;}
+.mr15{margin-right:15px;}
+.mr20{margin-right:20px;}
+
+/* 定义清除浮动的样式 */
+.clearfix:after{content:"."; display:block; height:0; clear:both; visibility:hidden;}
+.clearfix{display:inline-block;}
+/* hides from ie-mac \*/
+* html .clearfix{height:1%;}
+.clearfix{display:block;}
+/* end hide from ie-mac */
+.clr{clear:both; height:0; line-height:0; font-size:0;} /* 简易清除浮动 */
+
+/* 定义隐藏属性 */
+.none{display:none;}
+.hidden{visibility:hidden;}
+.visible{visibility:visible;}
+
+/* 定义浮动 */
+.fl{float:left;}
+.fr{float:right;}
+
+/* 定义定位 */
+.relative{/*position:relative;z-index:0;*/}
+.absolute{position:absolute;}
+
+/* 定义文字显示方式 */
+.tal{text-align:left;}
+.tac{text-align:center;}
+.tar{text-align:right;}
+
+/* 定义取消字体下划线 */
+.nonline:hover, .nonline a:hover{text-decoration:none;}
+
+/* 定义文字超出部分用省略号代替 */
+.ellipsis{
+	overflow:hidden;
+	white-space:nowrap;
+	-o-text-overflow:ellipsis; /* Opera */
+	text-overflow:ellipsis; /* IE, Safari (WebKit) */
+	_width: 100%; /* IE6 需要定义宽度 */
+}
+
+/* 定义图片居中的通用样式
+ * *font-size:175px; (height*0.873)
+ */
+.imgCenter{
+	display:table-cell;
+	text-align:center;
+	vertical-align:middle;
+	*display:block;
+	*font-family:Arial;
+	*line-height:0;
+	*vertical-align:auto;
+}
+.imgCenter img{vertical-align:middle;}
+
+/* 定义部分css3样式 */
+/* 2px圆角 */
+.radius2{
+	-moz-border-radius:2px; /* Firefox支持 */
+	-webkit-border-radius:2px; /* webkit内核的Safari和Chrome支持 */
+	border-radius:2px; /* Opera支持 */
+}
+/* 3px圆角 */
+.radius3{
+	-moz-border-radius:3px; /* Firefox支持 */
+	-webkit-border-radius:3px; /* webkit内核的Safari和Chrome支持 */
+	border-radius:3px; /* Opera支持 */
+}
+/* 5px圆角 */
+.radius5{
+	-moz-border-radius:5px; /* Firefox支持 */
+	-webkit-border-radius:5px; /* webkit内核的Safari和Chrome支持 */
+	border-radius:5px; /* Opera支持 */
+}
+/* 0px阴影 */
+.shadow0{
+	box-shadow:0 0 5px #000;
+	-moz-box-shadow:0 0 5px #000;               /* For Firefox3.6+ */
+	-webkit-box-shadow:0 0 5px #000;            /* For Chrome5+, Safari5+ */
+	box-shadow:0 0 5px #000;                    /* For Latest Opera */
+}
+.graph{
+	width:450px;
+	border:1px solid black;
+	height:25px;
+}
+#bar{
+	display:block;
+	background:#66B3FF;
+	float:left;
+	height:100%;
+	text-align:center;
+}
+#barNum{
+	position:absolute;
+}
+/* icon */
+.ico{background-image:url(../images/ico.png);background-repeat:no-repeat;display:inline-block;float:left;vertical-align:middle;cursor:pointer;}
+.btn{background-color:transparent;background-image:url(../images/btn.png);background-repeat:no-repeat;display:inline-block;border:none;vertical-align:middle;cursor:pointer;text-align:center;text-shadow:1px 1px 1px #fff;overflow:hidden;}
+.btn:hover{text-decoration:none;}
+
+#fade{display:none;background:#000;position:fixed;left:0;top:0;z-index:10;width:100%; height:100%;opacity:.80;z-index:9999;}
+.popup{display:none;float: left;position:fixed;top:50%;left:50%;z-index:99999;}
+/*--Making IE6 Understand Fixed Positioning--*/
+*html #fade{position:absolute;}
+*html .popup{position:absolute;}
+.table{
+	width: 100% !important;
+}
+.table >tbody>tr> td{
+	border: 1px solid #c3c3c3;
+	padding: 4px;
+	background: #fff;
+}
+.table >tbody>tr:hover>td{
+	background: #e9f1de;
+}
+.txtAdd{
+    width:99% !important;
+}

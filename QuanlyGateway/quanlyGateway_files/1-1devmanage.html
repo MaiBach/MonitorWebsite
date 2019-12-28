@@ -1,0 +1,483 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>WEB SMS Center</title>
+<link href="./englobal.css" rel="stylesheet" type="text/css">
+<link href="./encss.css" rel="stylesheet" type="text/css">
+<style>input[readonly]{background-color:#dcdcdc;}input[disabled]{background-color:#dcdcdc;}</style>
+<script type="text/javascript" src="./jquery-1.8.2.js"></script>
+<script>
+function htmlObj(obj)
+{
+	return document.getElementById(obj);
+}
+
+function createAJAX()
+{
+	if (window.XMLHttpRequest)
+	{
+		var oHttp = new XMLHttpRequest();
+		return oHttp;
+	}
+	else if (window.ActiveXObject)
+	{
+		var versions = [
+			"MSXML2.XmlHttp.6.0",
+			"MSXML2.XmlHttp.3.0"
+		];
+
+		for (var i = 0; i < versions.length; i++)
+		{
+			try {
+				var oHttp = new ActiveXObject(versions[i]);
+				return oHttp;
+			} catch (error) {}
+		}
+    	}
+	throw new Error("Your browser doesn't support XMLHttpRequest");
+}
+
+updateCount = 0;
+
+function load_word(ipAddr,port,apiUser,apiPwd,devId,flag)
+{
+	if(flag != -1)
+	{
+		load_word_ajax = createAJAX();
+		load_word_ajax.open('POST','1-1-2devconnupdate.php',true);
+		load_word_ajax.onreadystatechange = load_word_change;
+
+		var urlstring = "&action=post"+"&devId="+devId+"&ipAddr="+ipAddr+"&port="+port+"&apiUser="+apiUser+"&apiPwd="+apiPwd+"&flag="+flag;
+		load_word_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		load_word_ajax.send(urlstring);
+		load_word_return=0;
+		updateCount = 0;
+	}
+	else
+	{
+		load_word_ajax = createAJAX();
+		load_word_ajax.open('POST','1-1-2devconnupdate.php',true);
+		load_word_ajax.onreadystatechange = load_word_change;
+
+		var urlstring = "&action=update"+"&devId="+devId+"&ipAddr="+ipAddr+"&port="+port+"&apiUser="+apiUser+"&apiPwd="+apiPwd+"&flag="+flag;
+		load_word_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		load_word_ajax.send(urlstring);
+		load_word_return=0;
+		updateCount++;
+	}
+}
+
+function load_word_change()
+{
+	if (load_word_ajax.readyState == 4)
+	{
+
+		if(updateCount < 5)
+		{
+			setTimeout("load_word(0,0,0,0,0,-1)",3000);
+		}
+
+		if (load_word_ajax.status != 200)
+		{
+			return;
+		}
+
+		try {
+			eval("var arr = "+load_word_ajax.responseText);
+		} catch(e)
+		{
+			return;
+		}
+
+		if (!arr || typeof(arr.lines) == "undefined" )
+		{
+			return;
+		}
+		
+		var html = "";
+		var line = arr.lines;
+
+		for(var i=0; i<line.connState.length; i++)
+		{
+			var objConnStateId = 'connState'+line.id[i];
+			var objconnBtnId = 'connBtn'+line.id[i];
+			if (htmlObj(objConnStateId) != null)
+			{
+				if(line.connState[i] == 2)
+				{
+					htmlObj(objConnStateId).innerHTML = "Connected";
+					htmlObj(objconnBtnId).value = "Disconnected";
+					htmlObj(objconnBtnId).disabled = false;
+				}
+				else
+				{
+					htmlObj(objconnBtnId).value = "Connection";
+					htmlObj(objconnBtnId).disabled = false;
+					if(line.connState[i] == 0)
+					{
+						htmlObj(objConnStateId).innerHTML = "Unconnected";
+					}
+					else if(line.connState[i] == 1)
+					{
+						htmlObj(objConnStateId).innerHTML = "Connecting";
+						htmlObj(objconnBtnId).disabled = true;
+					}
+					else if(line.connState[i] == 3)
+					{
+						htmlObj(objConnStateId).innerHTML = "Connection Failed";
+					}
+				}
+			}
+		}
+	}
+}
+
+</script>
+<script type="text/javascript">
+function alls()
+{
+	var sum = document.getElementsByName("eng_id[]");// 得到name是eng_id[]的元素的类型
+	for(var i=0;i<sum.length;i++)
+	{ //循环输出
+		if(sum[i].type=="checkbox")
+		{ //判断是否是checkbox
+     		sum[i].checked = true ; //是的话就选中
+   		}
+	}
+}
+function unalls()
+{
+	var sum = document.getElementsByName("eng_id[]");// 得到name是eng_id[]的元素的类型
+	for(var i=0;i<sum.length;i++)
+	{ //循环输出
+   		if(sum[i].type=="checkbox")
+   	   	{ //判断是否是checkbox
+     		sum[i].checked = false ; //是的话就不选中
+   		}
+	}
+}
+function resets()
+{
+	var sum = document.getElementsByName("eng_id[]");// 得到name是eng_id[]的元素的类型
+	for(var i=0;i<sum.length;i++)
+	{
+		//循环输出
+		if(sum[i].type=="checkbox")
+		{
+			//判断是否是checkbox
+			if(sum[i].checked==true)
+			{    //判断是否选中
+				sum[i].checked = false; //选中的让其不选择
+			}
+			else
+			{      //判断是否没选
+				sum[i].checked = true;   //没选中的让其选择
+			}
+		}
+	}
+}
+
+function ConnectDev(ipAddr,port,apiUser,apiPwd,devId)
+{
+	if(document.getElementById("connBtn"+devId).value == "Connection")
+	{
+		document.getElementById("connState"+devId).innerHTML="Connecting";
+		document.getElementById("connBtn"+devId).disabled=true;
+		load_word(ipAddr,port,apiUser,apiPwd,devId,1);
+	}
+	else
+	{
+		document.getElementById("connState"+devId).innerHTML="Unconnected";
+		document.getElementById("connBtn"+devId).value="Connection";
+		document.getElementById("connBtn"+devId).disabled=false;
+		load_word(ipAddr,port,apiUser,apiPwd,devId,0);
+	}
+}
+
+function AddDev()
+{
+	window.location = "1-1-1devoperate.php";
+}
+
+</script>
+</head>
+<body>
+<form method="post" action="http://27.72.105.89:8086/vi/1-1devmanage.php" name="devForm" id="devForm">
+		<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="tbltitle">
+	    <tbody><tr>
+	    	<td width="1%">&nbsp;</td>
+	    	<td width="5%">&nbsp;</td>
+	    	<td width="16%">&nbsp;</td>
+	    	<td width="5%">&nbsp;</td>
+	    	<td width="16%">&nbsp;</td>
+	    	<td width="5%">&nbsp;</td>
+	    	<td width="16%">&nbsp;</td>
+	    	<td width="36%">&nbsp;</td>
+	    </tr>
+	    <tr>
+	    	<td>&nbsp;</td>
+			<td nowrap="">Device Name</td>
+			<td><input type="text" style="width:150px" class="text1" id="searchName" maxlength="128" name="searchName" value=""></td>		
+			<td nowrap="">IP Address</td>
+			<td><input type="text" style="width:150px" class="text1" id="searchIp" maxlength="1024" name="searchIp" value=""></td>
+			<td nowrap="">Connection Status</td>
+			<td>
+				<select id="searchConnState" name="searchConnState" class="list" style="width:100px">
+					<option value="4" selected="">All</option>
+					<option value="0">Unconnected</option>
+					<option value="1">Connecting</option>
+					<option value="2">Connected</option>
+					<option value="3">Connection Failed</option>
+				</select>
+			</td>
+			<td><input class="btn btn1" value="Search" type="submit" name="search"></td>
+		</tr>
+	</tbody></table>
+	<div class="main">
+		<div class="clearfix">
+			<div class="relative mt20">
+			<div class="status">Device Manage</div>
+				<div class="box box2 box4" style="overflow-x:auto;">
+					<div class="table">
+						<table class="wid1">
+			                <thead>
+			                    <tr>
+			                        <th class="t1">Check</th>
+									<th>Device ID</th>
+			                        <th>Device Name</th>
+			                        <th>IP Address</th>
+			                   		<th>API Username</th>
+			                        <th>Tin OTP</th>
+			                        <th>Tin CSKH</th>
+			                        <th>Connection Status</th>
+			                        <th>Connection Operation</th>
+									<th>Topup Operation</th>
+			                        <th>Auto Update</th>
+			                        <th>Status</th>
+			                        <th>Modify</th>
+			                    </tr>
+			                </thead>
+										                <tbody>
+			                    <tr>
+			                        <td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" value="1"></td>
+									<td>1</td>
+			                        <td>SMG4032 Dev1</td>
+			                        <td>10.148.10.246:80</td>
+			                        <td>ApiUserAdmin</td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                    	<td id="connState1">Connection Failed</td>
+			                        <td><input id="connBtn1" class="btn blue-btn29 poplight" name="connect" type="button" onclick="ConnectDev(&#39;10.148.10.246&#39;,&#39;80&#39;,&#39;ApiUserAdmin&#39;,&#39;admin&#39;,&#39;1&#39;)" value="Connection"></td>
+									
+									
+									<td><input id="connBtn1" class="btn blue-btn29 poplight" name="resettopup" type="submit" value="Reset Topup" onclick="if (confirm(&quot;Bạn có chắc chắn muốn reset sms topup không?&quot;)) return true; else return false;"></td>
+                                   
+								   <td><input type="checkbox" value="1" disabled=""></td>
+                                    <td><span style="color:red">PAUSED</span></td>
+                                    <td><a class="ico o-alter" href="http://27.72.105.89:8086/vi/1-1-1devoperate.php?id=1"></a></td>
+			                    </tr>
+			                </tbody>
+										                <tbody>
+			                    <tr>
+			                        <td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" value="2"></td>
+									<td>2</td>
+			                        <td>SMG4016 DP</td>
+			                        <td>10.148.10.216:80</td>
+			                        <td>ApiUserAdmin</td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                    	<td id="connState2">Connection Failed</td>
+			                        <td><input id="connBtn2" class="btn blue-btn29 poplight" name="connect" type="button" onclick="ConnectDev(&#39;10.148.10.216&#39;,&#39;80&#39;,&#39;ApiUserAdmin&#39;,&#39;admin&#39;,&#39;2&#39;)" value="Connection"></td>
+									
+									
+									<td><input id="connBtn2" class="btn blue-btn29 poplight" name="resettopup" type="submit" value="Reset Topup" onclick="if (confirm(&quot;Bạn có chắc chắn muốn reset sms topup không?&quot;)) return true; else return false;"></td>
+                                   
+								   <td><input type="checkbox" value="1" disabled=""></td>
+                                    <td><span style="color:red">PAUSED</span></td>
+                                    <td><a class="ico o-alter" href="http://27.72.105.89:8086/vi/1-1-1devoperate.php?id=2"></a></td>
+			                    </tr>
+			                </tbody>
+										                <tbody>
+			                    <tr>
+			                        <td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" value="3"></td>
+									<td>3</td>
+			                        <td>SMG32-202 DEV3</td>
+			                        <td>10.148.10.202:80</td>
+			                        <td>ApiUserAdmin</td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                    	<td id="connState3">Connection Failed</td>
+			                        <td><input id="connBtn3" class="btn blue-btn29 poplight" name="connect" type="button" onclick="ConnectDev(&#39;10.148.10.202&#39;,&#39;80&#39;,&#39;ApiUserAdmin&#39;,&#39;ADMIN&#39;,&#39;3&#39;)" value="Connection"></td>
+									
+									
+									<td><input id="connBtn3" class="btn blue-btn29 poplight" name="resettopup" type="submit" value="Reset Topup" onclick="if (confirm(&quot;Bạn có chắc chắn muốn reset sms topup không?&quot;)) return true; else return false;"></td>
+                                   
+								   <td><input type="checkbox" value="1" disabled=""></td>
+                                    <td><span style="color:red">PAUSED</span></td>
+                                    <td><a class="ico o-alter" href="http://27.72.105.89:8086/vi/1-1-1devoperate.php?id=3"></a></td>
+			                    </tr>
+			                </tbody>
+										                <tbody>
+			                    <tr>
+			                        <td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" value="5"></td>
+									<td>5</td>
+			                        <td>GW 200 DEV 5 </td>
+			                        <td>10.148.10.200:80</td>
+			                        <td>ApiUserAdmin</td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                    	<td id="connState5">Connection Failed</td>
+			                        <td><input id="connBtn5" class="btn blue-btn29 poplight" name="connect" type="button" onclick="ConnectDev(&#39;10.148.10.200&#39;,&#39;80&#39;,&#39;ApiUserAdmin&#39;,&#39;admin&#39;,&#39;5&#39;)" value="Connection"></td>
+									
+									
+									<td><input id="connBtn5" class="btn blue-btn29 poplight" name="resettopup" type="submit" value="Reset Topup" onclick="if (confirm(&quot;Bạn có chắc chắn muốn reset sms topup không?&quot;)) return true; else return false;"></td>
+                                   
+								   <td><input type="checkbox" value="1" disabled=""></td>
+                                    <td><span style="color:red">PAUSED</span></td>
+                                    <td><a class="ico o-alter" href="http://27.72.105.89:8086/vi/1-1-1devoperate.php?id=5"></a></td>
+			                    </tr>
+			                </tbody>
+										                <tbody>
+			                    <tr>
+			                        <td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" value="6"></td>
+									<td>6</td>
+			                        <td>GW  DEV-6</td>
+			                        <td>10.148.10.221:80</td>
+			                        <td>ApiUserAdmin</td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                    	<td id="connState6">Connection Failed</td>
+			                        <td><input id="connBtn6" class="btn blue-btn29 poplight" name="connect" type="button" onclick="ConnectDev(&#39;10.148.10.221&#39;,&#39;80&#39;,&#39;ApiUserAdmin&#39;,&#39;admin&#39;,&#39;6&#39;)" value="Connection"></td>
+									
+									
+									<td><input id="connBtn6" class="btn blue-btn29 poplight" name="resettopup" type="submit" value="Reset Topup" onclick="if (confirm(&quot;Bạn có chắc chắn muốn reset sms topup không?&quot;)) return true; else return false;"></td>
+                                   
+								   <td><input type="checkbox" value="1" disabled=""></td>
+                                    <td><span style="color:red">PAUSED</span></td>
+                                    <td><a class="ico o-alter" href="http://27.72.105.89:8086/vi/1-1-1devoperate.php?id=6"></a></td>
+			                    </tr>
+			                </tbody>
+										                <tbody>
+			                    <tr>
+			                        <td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" value="7"></td>
+									<td>7</td>
+			                        <td>GW  206 DP DEV 7</td>
+			                        <td>10.148.10.206:80</td>
+			                        <td>ApiUserAdmin</td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                    	<td id="connState7">Connection Failed</td>
+			                        <td><input id="connBtn7" class="btn blue-btn29 poplight" name="connect" type="button" onclick="ConnectDev(&#39;10.148.10.206&#39;,&#39;80&#39;,&#39;ApiUserAdmin&#39;,&#39;admin&#39;,&#39;7&#39;)" value="Connection"></td>
+									
+									
+									<td><input id="connBtn7" class="btn blue-btn29 poplight" name="resettopup" type="submit" value="Reset Topup" onclick="if (confirm(&quot;Bạn có chắc chắn muốn reset sms topup không?&quot;)) return true; else return false;"></td>
+                                   
+								   <td><input type="checkbox" value="1" disabled=""></td>
+                                    <td><span style="color:red">PAUSED</span></td>
+                                    <td><a class="ico o-alter" href="http://27.72.105.89:8086/vi/1-1-1devoperate.php?id=7"></a></td>
+			                    </tr>
+			                </tbody>
+										                <tbody>
+			                    <tr>
+			                        <td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" value="8"></td>
+									<td>8</td>
+			                        <td>VINA BHS</td>
+			                        <td>172.16.1.225:80</td>
+			                        <td>ApiUserAdmin</td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                    	<td id="connState8">Connection Failed</td>
+			                        <td><input id="connBtn8" class="btn blue-btn29 poplight" name="connect" type="button" onclick="ConnectDev(&#39;172.16.1.225&#39;,&#39;80&#39;,&#39;ApiUserAdmin&#39;,&#39;admin&#39;,&#39;8&#39;)" value="Connection"></td>
+									
+									
+									<td><input id="connBtn8" class="btn blue-btn29 poplight" name="resettopup" type="submit" value="Reset Topup" onclick="if (confirm(&quot;Bạn có chắc chắn muốn reset sms topup không?&quot;)) return true; else return false;"></td>
+                                   
+								   <td><input type="checkbox" value="1" disabled=""></td>
+                                    <td><span style="color:red">PAUSED</span></td>
+                                    <td><a class="ico o-alter" href="http://27.72.105.89:8086/vi/1-1-1devoperate.php?id=8"></a></td>
+			                    </tr>
+			                </tbody>
+										                <tbody>
+			                    <tr>
+			                        <td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" value="9"></td>
+									<td>9</td>
+			                        <td>Mobi NamDinh Dev9</td>
+			                        <td>27.72.110.203:8018</td>
+			                        <td>ApiUserAdmin</td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                    	<td id="connState9">Connection Failed</td>
+			                        <td><input id="connBtn9" class="btn blue-btn29 poplight" name="connect" type="button" onclick="ConnectDev(&#39;27.72.110.203&#39;,&#39;8018&#39;,&#39;ApiUserAdmin&#39;,&#39;admin&#39;,&#39;9&#39;)" value="Connection"></td>
+									
+									
+									<td><input id="connBtn9" class="btn blue-btn29 poplight" name="resettopup" type="submit" value="Reset Topup" onclick="if (confirm(&quot;Bạn có chắc chắn muốn reset sms topup không?&quot;)) return true; else return false;"></td>
+                                   
+								   <td><input type="checkbox" value="1" disabled=""></td>
+                                    <td><span style="color:red">PAUSED</span></td>
+                                    <td><a class="ico o-alter" href="http://27.72.105.89:8086/vi/1-1-1devoperate.php?id=9"></a></td>
+			                    </tr>
+			                </tbody>
+										                <tbody>
+			                    <tr>
+			                        <td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" value="10"></td>
+									<td>10</td>
+			                        <td>GW32 Du phong</td>
+			                        <td>27.72.110.202:8018</td>
+			                        <td>ApiUserAdmin</td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                    	<td id="connState10">Connection Failed</td>
+			                        <td><input id="connBtn10" class="btn blue-btn29 poplight" name="connect" type="button" onclick="ConnectDev(&#39;27.72.110.202&#39;,&#39;8018&#39;,&#39;ApiUserAdmin&#39;,&#39;admin&#39;,&#39;10&#39;)" value="Connection"></td>
+									
+									
+									<td><input id="connBtn10" class="btn blue-btn29 poplight" name="resettopup" type="submit" value="Reset Topup" onclick="if (confirm(&quot;Bạn có chắc chắn muốn reset sms topup không?&quot;)) return true; else return false;"></td>
+                                   
+								   <td><input type="checkbox" value="1" disabled=""></td>
+                                    <td><span style="color:red">PAUSED</span></td>
+                                    <td><a class="ico o-alter" href="http://27.72.105.89:8086/vi/1-1-1devoperate.php?id=10"></a></td>
+			                    </tr>
+			                </tbody>
+										                <tbody>
+			                    <tr>
+			                        <td class="t1"><input class="mr5" type="checkbox" name="eng_id[]" value="11"></td>
+									<td>11</td>
+			                        <td>GW16 BHS</td>
+			                        <td>172.16.10.225:80</td>
+			                        <td>ApiUserAdmin</td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                        <td><input type="checkbox" value="1" disabled="" checked=""></td>
+			                    	<td id="connState11">Connection Failed</td>
+			                        <td><input id="connBtn11" class="btn blue-btn29 poplight" name="connect" type="button" onclick="ConnectDev(&#39;172.16.10.225&#39;,&#39;80&#39;,&#39;ApiUserAdmin&#39;,&#39;admin&#39;,&#39;11&#39;)" value="Connection"></td>
+									
+									
+									<td><input id="connBtn11" class="btn blue-btn29 poplight" name="resettopup" type="submit" value="Reset Topup" onclick="if (confirm(&quot;Bạn có chắc chắn muốn reset sms topup không?&quot;)) return true; else return false;"></td>
+                                   
+								   <td><input type="checkbox" value="1" disabled=""></td>
+                                    <td><span style="color:red">PAUSED</span></td>
+                                    <td><a class="ico o-alter" href="http://27.72.105.89:8086/vi/1-1-1devoperate.php?id=11"></a></td>
+			                    </tr>
+			                </tbody>
+								                	</table>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="relative mt20" style="width:98%">
+    	<div class="box box3 clearfix">
+            <input class="btn btn1" type="button" onclick="alls()" value="Check All"><i class="ico seperator"></i>
+            <input class="btn btn1" type="button" onclick="unalls()" value="Uncheck All"><i class="ico seperator"></i>
+            <input class="btn btn1" type="button" onclick="resets()" value="Inverse"><i class="ico seperator"></i>
+			<input class="btn btn1" type="submit" name="del" value="Delete" onclick="if (confirm(&quot;Are you sure to delete?&quot;)) return true; else return false;"><i class="ico seperator"></i>
+			<input class="btn btn1" type="submit" name="delall" value="Clear All" onclick="if (confirm(&quot;Are you sure to clear all?&quot;)) return true; else return false;">
+			<input style="float:right" class="btn btn1" type="button" onclick="AddDev()" value="Add New">
+        </div>
+    </div>
+    <div class="relative mt3">
+    	<div class="clearfix">
+    	<span>10 bản ghi&nbsp;&nbsp; 20 bản ghi/Trang</span>&nbsp;&nbsp; <span>1/1&nbsp;&nbsp;</span> Trang đầu&nbsp;&nbsp; Trang trước&nbsp;&nbsp; Trang tiếp&nbsp;&nbsp;Trang cuối &nbsp;&nbsp; (tổng số: 1 trang)		</div>
+    </div>
+</form>
+
+
+</body></html>
